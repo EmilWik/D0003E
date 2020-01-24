@@ -28,10 +28,9 @@ int main(void)
 	writeChar('1', 3);
 	writeChar('5', 4);
 	writeChar('9', 5);
-
-	
-	writeLong(9876543210);
 	*/
+	//writeLong(9876543210);
+	
 }
 
 

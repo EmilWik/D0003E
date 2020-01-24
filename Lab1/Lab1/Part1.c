@@ -3,7 +3,7 @@
 #include <limits.h>
 
 void initLCD(void){
-	
+
 	LCDCRA = (1 << LCDEN) | (1 << LCDAB);
 	
 	// Vi hade missat LCDPM0-2
@@ -18,22 +18,21 @@ void initLCD(void){
 
 
 void writeChar(char c, int pos){	
-	int column =    pos / 2;
-	#define HEAD  _SFR_MEM8(0xEC + column)		// LCDDR0
-	#define CHEST _SFR_MEM8(0xF1 + column)		// LCDDR5
-	#define LEGS  _SFR_MEM8(0xF6 + column)		// LCDDR10
-	#define FEET  _SFR_MEM8(0xFB + column)		// LCDDR15
+	int column = pos / 2;						// Determines which pair of digits to write to
+	int offset = 4*((pos) % 2);					// Determines which of the 2 digits to write to
+	
+	#define HEAD  _SFR_MEM8(0xEC + column)		// LCDDR0  - Top of digit
+	#define CHEST _SFR_MEM8(0xF1 + column)		// LCDDR5  - Upper middle of digit
+	#define LEGS  _SFR_MEM8(0xF6 + column)		// LCDDR10 - Lower middle of digit
+	#define FEET  _SFR_MEM8(0xFB + column)		// LCDDR15 - Bottom of digit
 	
 
 	// Clears position
-	int offset = 4*((pos+1) % 2);
-	HEAD  &= (0xF << offset);
-	CHEST &= (0xF << offset);
-	LEGS  &= (0xF << offset);
-	FEET  &= (0xF << offset);
+	HEAD  &= (0x0F0 >> offset);
+	CHEST &= (0x0F0 >> offset);
+	LEGS  &= (0x0F0 >> offset);
+	FEET  &= (0x0F0 >> offset);
 	
-
-	offset = 4*(pos % 2);
 	switch (c){
 		case '0':
 			HEAD  += (1 << (0 + offset));
@@ -99,7 +98,6 @@ void writeChar(char c, int pos){
 
 
 void writeLong(long i){
-	
 	long div = i;
 	int rest;
 	int pos = 5;
@@ -125,7 +123,7 @@ void writeLong(long i){
 
 
 
-bool is_prime(long i){
+static bool is_prime(long i){
 	
 	if(i < 2){
 		return false;

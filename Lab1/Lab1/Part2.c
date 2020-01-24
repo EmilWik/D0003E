@@ -10,7 +10,7 @@ void blink(void){
 	
 	//bool i = false;
 
-	// 1 Hz, probs inte korrekt gjort tho  
+	// 1 Hz, ganska def inte korrekt gjort tho  
 	unsigned long l = 0xFFFF/4;
 	while(1){
 	if ((TCNT1 >= l && TCNT1 < 2*l) || (TCNT1 >= 3*l && TCNT1 < 4*l))

@@ -1,4 +1,5 @@
 #include <avr/io.h>
+#include <stdbool.h>
 
 void blink(void){
 
@@ -8,19 +9,48 @@ void blink(void){
 	
 	
 	
-	//bool i = false;
+	
 
-	// 1 Hz, ganska def inte korrekt gjort tho  
-	unsigned long l = 0xFFFF/4;
+	
+	
+	//unsigned int l = 0xFFFF/8;
+	
+	
+	// 1 Hz, ser bättre ut. Still osäker tho
+	bool b = false;
+	unsigned int i = 0;
+	unsigned int nextVal = 0;
 	while(1){
+	
+	if (TCNT1 == nextVal)
+	{
+		nextVal = (++i % 8)*(0xFFFF/8);
+		
+		if(b){
+			LCDDR0 = (1 << 2);
+			b = false;
+		}else{
+			LCDDR0 = 0;
+			b = true;
+		}
+	
+	}
+	
+	
+	
+	
+	// 1 Hz, ganska def inte korrekt gjort tho  
+			/*
 	if ((TCNT1 >= l && TCNT1 < 2*l) || (TCNT1 >= 3*l && TCNT1 < 4*l))
 	{
 			LCDDR0 = (1 << 2);
 	}else{
 			LCDDR0 = 0;
 	}
-
-
+*/
+	
+	
+	
 /*
 		//writeLong(TCNT1);
 		if (TCNT1 == 0)

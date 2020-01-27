@@ -8,18 +8,22 @@
 #include <avr/io.h>
 #include "Part1.h"
 #include "Part2.h"
+#include "Part3.h"
 
 int main(void)
 {
-	CLKPR = 0x80;
-	CLKPR = 0x00;
+
 	
 	initLCD();
 
-	blink();
+
+	button();
+
+	//blink();
 	
 
 	//primes();
+	
 
 	/*
 	writeChar('3', 0);

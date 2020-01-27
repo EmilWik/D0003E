@@ -8,3 +8,5 @@ Part1.c
 
 Part2.c
 
+Part3.c
+

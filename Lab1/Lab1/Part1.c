@@ -4,6 +4,9 @@
 
 void initLCD(void){
 
+	CLKPR = 0x80;
+	CLKPR = 0x00;
+
 	LCDCRA = (1 << LCDEN) | (1 << LCDAB);
 	
 	// Vi hade missat LCDPM0-2
@@ -161,7 +164,7 @@ void primes(){
 
 
 
-/*
+/* Behövdes aldrig
 void clearLCD(void){
 	writeChar(' ', 0);
 	writeChar(' ', 1);

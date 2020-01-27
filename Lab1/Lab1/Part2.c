@@ -22,19 +22,19 @@ void blink(void){
 	unsigned int nextVal = 0;
 	while(1){
 	
-	if (TCNT1 == nextVal)
-	{
-		nextVal = (++i % 8)*(0xFFFF/8);
-		
-		if(b){
-			LCDDR0 = (1 << 2);
-			b = false;
-		}else{
-			LCDDR0 = 0;
-			b = true;
-		}
+		if (TCNT1 == nextVal)
+		{
+			nextVal = (++i % 8)*(0xFFFF/8);
+			
+			if(b){
+				LCDDR0 = (1 << 2);
+				b = false;
+				}else{
+				LCDDR0 = 0;
+				b = true;
+			}
 	
-	}
+		}
 	
 	
 	

@@ -2,7 +2,7 @@
 #define PART4_H_
 
 
-void run(int startValue);
+void run(long startValue);
 
 
 #endif /* PART4_H_ */

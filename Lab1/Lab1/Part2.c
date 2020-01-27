@@ -1,9 +1,10 @@
 #include <avr/io.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 void blink(void){
 
-	TCCR1B = (1 << CS12);
+	TCCR1B = (1 << CS11) | (1 << CS10);
 	//TCCR1B = (1 << WGM12);
 	//TCCR1A = (1 << WGM10) | (1 << WGM11);
 	
@@ -15,13 +16,21 @@ void blink(void){
 	
 	// 1 Hz, ser bättre ut. Still osäker tho
 	bool state = false;
-	unsigned int i = 0;
-	unsigned int nextVal = 0;
+	unsigned long i = 0;
+	unsigned long nextVal = 0;
+	
+	unsigned long l = (0xFFFF/2);
+	//uint16_t nV = 0;
+	
+	
 	while(1){
 	
-		if (TCNT1 == nextVal)
+	
+	
+		if (TCNT1 == 0)
 		{
-			nextVal = (++i % 8)*(0xFFFF/8);
+			//nextVal = (++i % 4)*(0xFFFF/4);
+			//nV += l;
 			
 			LCDDR0 = state << 2;
 			state = !state;		
@@ -29,37 +38,6 @@ void blink(void){
 	
 		
 	
-	
-	
-	
-	// 1 Hz, ganska def inte korrekt gjort tho  
-			/*
-	if ((TCNT1 >= l && TCNT1 < 2*l) || (TCNT1 >= 3*l && TCNT1 < 4*l))
-	{
-			LCDDR0 = (1 << 2);
-	}else{
-			LCDDR0 = 0;
-	}
-*/
-	
-	
-	
-/*
-		//writeLong(TCNT1);
-		if (TCNT1 == 0)
-		{
-						
-			if(i){
-				LCDDR0 = (1 << 2);
-				i = false;			
-			}else{
-				LCDDR0 = (1 << 1);
-				i = true;
-			}
-			
-		}
-
-*/
 	}
 
 

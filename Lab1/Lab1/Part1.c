@@ -9,7 +9,6 @@ void initLCD(void){
 
 	LCDCRA = (1 << LCDEN) | (1 << LCDAB);
 	
-	// Vi hade missat LCDPM0-2
 	LCDCRB = (1 << LCDMUX0) | (1 << LCDMUX1) | (1 << LCDPM2) | (1 << LCDPM1) | (1 << LCDPM0);
 	
 	LCDFRR = (1 << LCDCD2) | (1 << LCDCD1) | (1 << LCDCD0);
@@ -43,49 +42,58 @@ void writeChar(char c, int pos){
 			LEGS  += (1 << (0 + offset)) | (1 << (2 + offset));
 			FEET  += (1 << (0 + offset));
 		break;
+		
 		case '1':
 			CHEST += (1 << (0 + offset));
 			LEGS  += (1 << (0 + offset));
 		break;
+		
 		case '2':
 			HEAD  += (1 << (0 + offset));
 			CHEST += (1 << (0 + offset));
 			LEGS  += (1 << (1 + offset)) | (1 << (2 + offset)) | (1 << (3 + offset));
 			FEET  += (1 << (0 + offset));
 		break;
+		
 		case '3':
 			HEAD  += (1 << (0 + offset));
 			CHEST += (1 << (0 + offset));
 			LEGS  += (1 << (0 + offset)) | (1 << (1 + offset)) | (1 << (3 + offset));
 			FEET  += (1 << (0 + offset));
 		break;
+		
 		case '4':
 			CHEST += (1 << (0 + offset)) | (1 << (2 + offset));
 			LEGS  += (1 << (0 + offset)) | (1 << (1 + offset)) | (1 << (3 + offset));
 		break;
+		
 		case '5':
 			HEAD  += (1 << (0 + offset));
 			CHEST += (1 << (2 + offset));
 			LEGS  += (1 << (0 + offset)) | (1 << (1 + offset)) | (1 << (3 + offset));
 			FEET  += (1 << (0 + offset));
 		break;
+		
 		case '6':
 			HEAD  += (1 << (0 + offset));
 			CHEST += (1 << (2 + offset));
 			LEGS  += (1 << (0 + offset)) | (1 << (1 + offset)) | (1 << (2 + offset)) | (1 << (3 + offset));
 			FEET  += (1 << (0 + offset));
 		break;
+		
 		case '7':
 			HEAD  += (1 << (0 + offset));
 			CHEST += (1 << (0 + offset));
 			LEGS  += (1 << (0 + offset));
 		break;
+		
 		case '8':
 			HEAD  += (1 << (0 + offset));
 			CHEST += (1 << (0 + offset)) | (1 << (2 + offset));
 			LEGS  += (1 << (0 + offset)) | (1 << (1 + offset)) | (1 << (2 + offset)) | (1 << (3 + offset));
 			FEET  += (1 << (0 + offset));
 		break;
+		
 		case '9':
 			HEAD  += (1 << (0 + offset));
 			CHEST += (1 << (0 + offset)) | (1 << (2 + offset));

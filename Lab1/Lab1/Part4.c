@@ -19,26 +19,26 @@ static bool is_prime(long i);
 
 
 
-static long primes(int startValue){
+static long primes(long startValue){
+	long i = startValue;
 	
-	for (long i = startValue; i <= LONG_MAX; i++){
-		if (is_prime(i)){
-			writeLong(i);
-			return i;
-		}
+	while(!is_prime(i)){
+		++i;
 	}
+	
+	return i;
 }
 
 
 static void blink(void){
 	
-	LCDDR0 |= state << 2;
+	//LCDDR0 |= state << 2;
 	
 	if (TCNT1 == nextVal)			// if (TCNT1 >= nextVal)
 	{
 		nextVal = (++i % 8)*(0xFFFF/8);
 		
-		LCDDR0 |= state << 2;
+		//LCDDR0 |= state << 2;
 		state = !state;
 		
 	}
@@ -48,7 +48,7 @@ static void blink(void){
 static void button(void){
 	
 	
-	LCDDR1 |= (1 << (currentVar+1));
+	//LCDDR1 |= (1 << (currentVar+1));
 
 		
 	if(PINB){
@@ -58,7 +58,7 @@ static void button(void){
 		if(risingEdge){
 			risingEdge = false;
 			currentVar = !currentVar;
-			LCDDR1 |= (1 <<( currentVar+1));
+			//LCDDR1 |= (1 <<( currentVar+1));
 		}
 	}
 	
@@ -70,16 +70,18 @@ static void button(void){
 
 
 
-void run(int startValue){
+void run(long startValue){
 	init();
 	
 	long nextStartValue = startValue;
 	
 	while(1){
 		
-		nextStartValue = primes(nextStartValue) + 1;
+		nextStartValue = primes(nextStartValue);
 		blink();
 		button();
+		
+		writeLong(nextStartValue++);
 	}
 }
 
@@ -106,6 +108,11 @@ static void writeChar(char c, int pos){
 	CHEST &= (0x0F0 >> offset);
 	LEGS  &= (0x0F0 >> offset);
 	FEET  &= (0x0F0 >> offset);
+	
+	
+	LCDDR0 = state << 2;				// Blink
+	LCDDR1 = (1 << (currentVar+1));		// Button
+	
 	
 	switch (c){
 		case '0':

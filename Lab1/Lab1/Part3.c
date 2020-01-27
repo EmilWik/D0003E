@@ -11,9 +11,9 @@ void button(void){
 	PORTB += (1<<PB7);
 	DDRB = (1<<DDB3)|(1<<DDB2)|(1<<DDB1)|(1<<DDB0);
 	
-	
 	//Insert nop for synchronization
 	asm("nop");
+
 
 	
 	bool risingEdge = false;

@@ -7,9 +7,6 @@ void blink(void){
 	//TCCR1B = (1 << WGM12);
 	//TCCR1A = (1 << WGM10) | (1 << WGM11);
 	
-	
-	
-	
 
 	
 	
@@ -17,7 +14,7 @@ void blink(void){
 	
 	
 	// 1 Hz, ser bättre ut. Still osäker tho
-	bool b = false;
+	bool state = false;
 	unsigned int i = 0;
 	unsigned int nextVal = 0;
 	while(1){
@@ -26,15 +23,11 @@ void blink(void){
 		{
 			nextVal = (++i % 8)*(0xFFFF/8);
 			
-			if(b){
-				LCDDR0 = (1 << 2);
-				b = false;
-				}else{
-				LCDDR0 = 0;
-				b = true;
-			}
-	
+			LCDDR0 = state << 2;
+			state = !state;		
 		}
+	
+		
 	
 	
 	

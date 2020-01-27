@@ -159,6 +159,12 @@
     <Compile Include="Part3.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Part4.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Part4.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

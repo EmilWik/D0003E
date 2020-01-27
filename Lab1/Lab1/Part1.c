@@ -142,7 +142,7 @@ static bool is_prime(long i){
 }
 
 
-void primes(){
+void primes(void){
 	
 	for (long i = 2; i <= LONG_MAX; i++){
 		if (is_prime(i)){

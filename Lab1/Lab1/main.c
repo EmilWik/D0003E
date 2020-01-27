@@ -9,15 +9,18 @@
 #include "Part1.h"
 #include "Part2.h"
 #include "Part3.h"
+#include "Part4.h"
 
 int main(void)
 {
 
+	run(25000);
 	
-	initLCD();
+	
+	//initLCD();
 
-
-	button();
+	
+	//button();
 
 	//blink();
 	

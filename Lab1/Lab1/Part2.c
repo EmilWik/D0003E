@@ -7,7 +7,7 @@ void blink(void){
 
 
 	bool state = false;
-	unsigned int i = 0;
+	unsigned int increment = 0.238422217136 * 0xFFFF; 
 	unsigned int nextVal = 0;
 
 	
@@ -15,14 +15,12 @@ void blink(void){
 		
 		if (TCNT1 == nextVal)			// if (TCNT1 >= nextVal)
 		{
-			nextVal = (++i % 4)*(0xFFFF/4);
+			nextVal = (nextVal + increment) % 0xFFFF;
 			
 			LCDDR0 = state << 2;
 			state = !state;		
 		}
-	
 		
-	
 	}
 
 

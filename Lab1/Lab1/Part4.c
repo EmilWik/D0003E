@@ -3,9 +3,9 @@
 #include <limits.h>
 
 
-static bool state = true;
-static unsigned int i = 0;
-static unsigned int nextVal = 0;
+bool state = false;
+unsigned int increment = 0.238422217136 * 0xFFFF;  
+unsigned int nextVal = 0;
 static bool risingEdge = false;
 static bool currentVar = false;
 
@@ -36,17 +36,17 @@ static void blink(void){
 	LCDDR0 |= state << 2;
 	
 	while(1){
-		
-	if (TCNT1 == nextVal)			// if (TCNT1 >= nextVal)
-	{
-		nextVal = (++i % 4)*(0xFFFF/4);
-		
-		LCDDR0 |= state << 2;
-		state = !state;
-		
-		break;
-	}
-	
+			
+		if (TCNT1 == nextVal)
+		{
+			nextVal = (nextVal + increment) % 0xFFFF;
+				
+			LCDDR0 = state << 2;
+			state = !state;
+			
+			break;
+		}
+			
 	}
 }
 
@@ -54,7 +54,7 @@ static void button(void){
 	
 	LCDDR1 |= (1 << (currentVar+1));
 	
-	if(PINB){
+	if((PINB && (1 << PINB7))){
 		risingEdge = true;
 	}
 	else{

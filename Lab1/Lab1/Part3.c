@@ -19,13 +19,15 @@ void button(void){
 	bool risingEdge = false;
 	bool currentVar = false;
 	
-	LCDDR1 = (1 << currentVar);
+	//LCDDR1 = (1 << currentVar);
 	while (1){
 		
-		if(PINB){
+		if((PINB && (1 << PINB7))){
 			risingEdge = true;
+			
 		}
 		else{
+			
 			if(risingEdge){
 				risingEdge = false;
 				currentVar = !currentVar;

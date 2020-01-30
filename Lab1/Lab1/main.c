@@ -14,17 +14,10 @@
 int main(void)
 {
 
-	run(5000);
+	initLCD();
 	
 	
-	//initLCD();
-
 	
-	//button();
-
-	//blink();
-	
-
 	//primes();
 	
 
@@ -38,6 +31,18 @@ int main(void)
 	*/
 	//writeLong(9876543210);
 	
+
+	
+	//button();
+
+
+
+	blink();
+	
+	
+	
+	
+	//run(25000);
 }
 
 

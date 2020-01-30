@@ -26,31 +26,34 @@ static long primes(long startValue){
 		++i;
 	}
 	
+	writeLong(i);
 	return i;
 }
 
 
 static void blink(void){
 	
-	//LCDDR0 |= state << 2;
+	LCDDR0 |= state << 2;
 	
+	while(1){
+		
 	if (TCNT1 == nextVal)			// if (TCNT1 >= nextVal)
 	{
-		nextVal = (++i % 8)*(0xFFFF/8);
+		nextVal = (++i % 4)*(0xFFFF/4);
 		
-		//LCDDR0 |= state << 2;
+		LCDDR0 |= state << 2;
 		state = !state;
 		
+		break;
 	}
-
+	
+	}
 }
 
 static void button(void){
 	
+	LCDDR1 |= (1 << (currentVar+1));
 	
-	//LCDDR1 |= (1 << (currentVar+1));
-
-		
 	if(PINB){
 		risingEdge = true;
 	}
@@ -58,10 +61,9 @@ static void button(void){
 		if(risingEdge){
 			risingEdge = false;
 			currentVar = !currentVar;
-			//LCDDR1 |= (1 <<( currentVar+1));
+			LCDDR1 |= (1 <<( currentVar+1));
 		}
 	}
-	
 	
 }
 
@@ -76,12 +78,11 @@ void run(long startValue){
 	long nextStartValue = startValue;
 	
 	while(1){
+
+		nextStartValue = primes(nextStartValue) + 1;
 		
-		nextStartValue = primes(nextStartValue);
-		blink();
 		button();
-		
-		writeLong(nextStartValue++);
+		blink();
 	}
 }
 
@@ -110,64 +111,60 @@ static void writeChar(char c, int pos){
 	FEET  &= (0x0F0 >> offset);
 	
 	
-	LCDDR0 = state << 2;				// Blink
-	LCDDR1 = (1 << (currentVar+1));		// Button
-	
-	
 	switch (c){
 		case '0':
-		HEAD  += (1 << (0 + offset));
-		CHEST += (1 << (0 + offset)) | (1 << (2 + offset));
-		LEGS  += (1 << (0 + offset)) | (1 << (2 + offset));
-		FEET  += (1 << (0 + offset));
+		HEAD  |= (1 << (0 + offset));
+		CHEST |= (1 << (0 + offset)) | (1 << (2 + offset));
+		LEGS  |= (1 << (0 + offset)) | (1 << (2 + offset));
+		FEET  |= (1 << (0 + offset));
 		break;
 		case '1':
-		CHEST += (1 << (0 + offset));
-		LEGS  += (1 << (0 + offset));
+		CHEST |= (1 << (0 + offset));
+		LEGS  |= (1 << (0 + offset));
 		break;
 		case '2':
-		HEAD  += (1 << (0 + offset));
-		CHEST += (1 << (0 + offset));
-		LEGS  += (1 << (1 + offset)) | (1 << (2 + offset)) | (1 << (3 + offset));
-		FEET  += (1 << (0 + offset));
+		HEAD  |= (1 << (0 + offset));
+		CHEST |= (1 << (0 + offset));
+		LEGS  |= (1 << (1 + offset)) | (1 << (2 + offset)) | (1 << (3 + offset));
+		FEET  |= (1 << (0 + offset));
 		break;
 		case '3':
-		HEAD  += (1 << (0 + offset));
-		CHEST += (1 << (0 + offset));
-		LEGS  += (1 << (0 + offset)) | (1 << (1 + offset)) | (1 << (3 + offset));
-		FEET  += (1 << (0 + offset));
+		HEAD  |= (1 << (0 + offset));
+		CHEST |= (1 << (0 + offset));
+		LEGS  |= (1 << (0 + offset)) | (1 << (1 + offset)) | (1 << (3 + offset));
+		FEET  |= (1 << (0 + offset));
 		break;
 		case '4':
-		CHEST += (1 << (0 + offset)) | (1 << (2 + offset));
-		LEGS  += (1 << (0 + offset)) | (1 << (1 + offset)) | (1 << (3 + offset));
+		CHEST |= (1 << (0 + offset)) | (1 << (2 + offset));
+		LEGS  |= (1 << (0 + offset)) | (1 << (1 + offset)) | (1 << (3 + offset));
 		break;
 		case '5':
-		HEAD  += (1 << (0 + offset));
-		CHEST += (1 << (2 + offset));
-		LEGS  += (1 << (0 + offset)) | (1 << (1 + offset)) | (1 << (3 + offset));
-		FEET  += (1 << (0 + offset));
+		HEAD  |= (1 << (0 + offset));
+		CHEST |= (1 << (2 + offset));
+		LEGS  |= (1 << (0 + offset)) | (1 << (1 + offset)) | (1 << (3 + offset));
+		FEET  |= (1 << (0 + offset));
 		break;
 		case '6':
-		HEAD  += (1 << (0 + offset));
-		CHEST += (1 << (2 + offset));
-		LEGS  += (1 << (0 + offset)) | (1 << (1 + offset)) | (1 << (2 + offset)) | (1 << (3 + offset));
-		FEET  += (1 << (0 + offset));
+		HEAD  |= (1 << (0 + offset));
+		CHEST |= (1 << (2 + offset));
+		LEGS  |= (1 << (0 + offset)) | (1 << (1 + offset)) | (1 << (2 + offset)) | (1 << (3 + offset));
+		FEET  |= (1 << (0 + offset));
 		break;
 		case '7':
-		HEAD  += (1 << (0 + offset));
-		CHEST += (1 << (0 + offset));
-		LEGS  += (1 << (0 + offset));
+		HEAD  |= (1 << (0 + offset));
+		CHEST |= (1 << (0 + offset));
+		LEGS  |= (1 << (0 + offset));
 		break;
 		case '8':
-		HEAD  += (1 << (0 + offset));
-		CHEST += (1 << (0 + offset)) | (1 << (2 + offset));
-		LEGS  += (1 << (0 + offset)) | (1 << (1 + offset)) | (1 << (2 + offset)) | (1 << (3 + offset));
-		FEET  += (1 << (0 + offset));
+		HEAD  |= (1 << (0 + offset));
+		CHEST |= (1 << (0 + offset)) | (1 << (2 + offset));
+		LEGS  |= (1 << (0 + offset)) | (1 << (1 + offset)) | (1 << (2 + offset)) | (1 << (3 + offset));
+		FEET  |= (1 << (0 + offset));
 		break;
 		case '9':
-		HEAD  += (1 << (0 + offset));
-		CHEST += (1 << (0 + offset)) | (1 << (2 + offset));
-		LEGS  += (1 << (0 + offset)) | (1 << (1 + offset)) | (1 << (3 + offset));
+		HEAD  |= (1 << (0 + offset));
+		CHEST |= (1 << (0 + offset)) | (1 << (2 + offset));
+		LEGS  |= (1 << (0 + offset)) | (1 << (1 + offset)) | (1 << (3 + offset));
 		break;
 		
 		default:
@@ -234,7 +231,7 @@ static void init(void){
 	TCCR1B = (1 << CS12);
 	
 	/*Button*/
-	PORTB += (1<<PB7);
+	PORTB |= (1<<PB7);
 	DDRB = (1<<DDB3)|(1<<DDB2)|(1<<DDB1)|(1<<DDB0);
 	asm("nop");
 }

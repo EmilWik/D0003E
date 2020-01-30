@@ -14,15 +14,15 @@
 int main(void)
 {
 
-	//run(1000);
+	run(5000);
 	
 	
-	initLCD();
+	//initLCD();
 
 	
 	//button();
 
-	blink();
+	//blink();
 	
 
 	//primes();

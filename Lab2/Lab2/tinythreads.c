@@ -12,6 +12,7 @@
 #define SETSTACK(buf,a) *((unsigned int *)(buf)+8) = (unsigned int)(a) + STACKSIZE - 4; \
                         *((unsigned int *)(buf)+9) = (unsigned int)(a) + STACKSIZE - 4
 
+
 struct thread_block {
     void (*function)(int);   // code to run
     int arg;                 // argument to the above
@@ -43,6 +44,9 @@ static void initialize(void) {
 		
 	//Insert nop for synchronization
 	asm("nop");
+	
+	
+
 	
 	PCMSK1 = (1 << PCINT15);
 	EIMSK = (1 << PCIE1);
@@ -111,17 +115,54 @@ void spawn(void (* function)(int), int arg) {
 }
 
 void yield(void) {
+	DISABLE();
     enqueue (current, &readyQ);
 	dispatch(dequeue(&readyQ));
+	ENABLE();
 }
 
 void lock(mutex *m) {
-
+	DISABLE();
+	if(m->locked){
+		m->waitQ = current;
+		dispatch(readyQ);
+	}
+	else{	
+		//for (volatile int i = 0; i < 1000; ){i++;}
+		m->locked = true;
+	}
+	ENABLE();
 }
 
 void unlock(mutex *m) {
-
+	DISABLE();
+	if (m->waitQ)
+	{
+		thread t = m->waitQ;
+		//for (volatile int i = 0; i < 10000; ){i++;}
+		m->waitQ = NULL;
+		dispatch(t);		
+	}
+	else{
+		m->locked = false;
+	}
+	ENABLE();
 }
+
+
+ISR(TIMER1_COMPA_vect) { 
+	yield();
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -137,8 +178,3 @@ ISR(PCINT1_vect) {
 	}
 }
 */
-
-ISR(TIMER1_COMPA_vect) { 
-	yield();
-}
-

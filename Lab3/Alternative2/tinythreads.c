@@ -138,10 +138,10 @@ void lock(mutex *m) {
 	DISABLE();
 	if(m->locked){
 		m->waitQ = current;
-		dispatch(dequeue(&readyQ));
+		dispatch(dequeue(&readyQ));			// Hopppar till nästa tråd. 
 	}
 	else{	
-		enqueue (current, &readyQ);
+		enqueue (current, &readyQ);				// Lägger primes / main thread i readyQ i början.
 		m->locked = true;
 	}
 	ENABLE();
@@ -152,7 +152,7 @@ void unlock(mutex *m) {
 	if (m->waitQ)
 	{
 		//m->waitQ = NULL;
-		enqueue (m->waitQ, &readyQ);		
+		enqueue (m->waitQ, &readyQ);		// Lägger tråden först om den finns
 	}
 	
 	ENABLE();
@@ -160,19 +160,17 @@ void unlock(mutex *m) {
 
 
 mutex mutexBlink;
-ISR(TIMER1_COMPA_vect) { 
-	
-	
+ISR(TIMER1_COMPA_vect) { 	
+																// Undra om vi borde ha disable/enable här
 	unlock(&mutexBlink);
-	dispatch(dequeue(&readyQ));	
-
+	dispatch(dequeue(&readyQ));				// Hopppar till nästa tråd. 
 	
 }
 
 
 mutex mutexButton;
 ISR(PCINT1_vect) {
-	
+				
 	unlock(&mutexButton);
 	dispatch(dequeue(&readyQ));
 }

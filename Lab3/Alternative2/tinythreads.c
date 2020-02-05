@@ -86,8 +86,10 @@ static thread dequeue(thread *queue) {
     if (*queue) {
         *queue = (*queue)->next;
     } else {
+
         // Empty queue, kernel panic!!!
-        while (1) ;  // not much else to do...
+		while (1) ; // not much else to do...
+		
     }
     return p;
 }
@@ -122,21 +124,24 @@ void spawn(void (* function)(int), int arg) {
     ENABLE();
 }
 
+/*
 void yield(void) {
 	DISABLE();
-    //enqueue (current, &readyQ);
+	thread t = current;
 	dispatch(dequeue(&readyQ));
+	enqueue (t, &readyQ);
 	ENABLE();
 }
+*/
 
 void lock(mutex *m) {
 	DISABLE();
 	if(m->locked){
 		m->waitQ = current;
-		dispatch(&readyQ);	
+		dispatch(dequeue(&readyQ));
 	}
 	else{	
-
+		enqueue (current, &readyQ);
 		m->locked = true;
 	}
 	ENABLE();
@@ -146,15 +151,10 @@ void unlock(mutex *m) {
 	DISABLE();
 	if (m->waitQ)
 	{
-		//thread t = m->waitQ;
-
 		//m->waitQ = NULL;
-		//enqueue(m->waitQ, &readyQ);
-		dispatch(m->waitQ);		
+		enqueue (m->waitQ, &readyQ);		
 	}
-	else{
-		m->locked = false;
-	}
+	
 	ENABLE();
 }
 
@@ -162,9 +162,11 @@ void unlock(mutex *m) {
 mutex mutexBlink;
 ISR(TIMER1_COMPA_vect) { 
 	
+	
 	unlock(&mutexBlink);
+	dispatch(dequeue(&readyQ));	
 
-	//yield();
+	
 }
 
 
@@ -172,5 +174,5 @@ mutex mutexButton;
 ISR(PCINT1_vect) {
 	
 	unlock(&mutexButton);
-	//yield();
+	dispatch(dequeue(&readyQ));
 }

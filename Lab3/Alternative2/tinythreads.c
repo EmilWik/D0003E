@@ -124,24 +124,14 @@ void spawn(void (* function)(int), int arg) {
     ENABLE();
 }
 
-/*
-void yield(void) {
-	DISABLE();
-	thread t = current;
-	dispatch(dequeue(&readyQ));
-	enqueue (t, &readyQ);
-	ENABLE();
-}
-*/
-
 void lock(mutex *m) {
 	DISABLE();
 	if(m->locked){
 		m->waitQ = current;
-		dispatch(dequeue(&readyQ));			// Hopppar till nästa tråd. 
+		dispatch(dequeue(&readyQ));			
 	}
 	else{	
-		enqueue (current, &readyQ);				// Lägger primes / main thread i readyQ i början.
+		enqueue (current, &readyQ);				
 		m->locked = true;
 	}
 	ENABLE();
@@ -152,25 +142,28 @@ void unlock(mutex *m) {
 	if (m->waitQ)
 	{
 		//m->waitQ = NULL;
-		enqueue (m->waitQ, &readyQ);		// Lägger tråden först om den finns
+		enqueue (m->waitQ, &readyQ);		
 	}
 	
 	ENABLE();
 }
 
 
+// Tror det här ska flyttas till main??
+
 mutex mutexBlink;
 ISR(TIMER1_COMPA_vect) { 	
-																// Undra om vi borde ha disable/enable här
+	DISABLE();													
 	unlock(&mutexBlink);
-	dispatch(dequeue(&readyQ));				// Hopppar till nästa tråd. 
-	
+	dispatch(dequeue(&readyQ));				
+	ENABLE();
 }
 
 
 mutex mutexButton;
 ISR(PCINT1_vect) {
-				
+	DISABLE();		
 	unlock(&mutexButton);
 	dispatch(dequeue(&readyQ));
+	ENABLE();
 }

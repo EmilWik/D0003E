@@ -60,8 +60,8 @@ static void initialize(void) {
 	TIMSK1 = (1 << OCIE1A);	
 	//TCCR0A = (1 << WGM01) | (1 << WGM00);		Tappert försök
 	TCCR1A = (1 << COM1A1) | (1 << COM1A0);
-	TCCR1B = (1 << CS12);
-	OCR1A = 781.25;
+	TCCR1B = (1 << CS11) | (1 << CS10);
+	OCR1A = 781.25*2;
 	TCNT1 = 0;
 	
 	
@@ -149,21 +149,20 @@ void unlock(mutex *m) {
 }
 
 
-// Tror det här ska flyttas till main??
 
 mutex mutexBlink;
 ISR(TIMER1_COMPA_vect) { 	
-	DISABLE();													
+	//DISABLE();													
 	unlock(&mutexBlink);
 	dispatch(dequeue(&readyQ));				
-	ENABLE();
+	//ENABLE();
 }
 
 
 mutex mutexButton;
 ISR(PCINT1_vect) {
-	DISABLE();		
+	//DISABLE();		
 	unlock(&mutexButton);
 	dispatch(dequeue(&readyQ));
-	ENABLE();
+	//ENABLE();
 }

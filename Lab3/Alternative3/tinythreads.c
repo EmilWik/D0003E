@@ -61,8 +61,8 @@ static void initialize(void) {
 	TIMSK1 = (1 << OCIE1A);
 	//TCCR0A = (1 << WGM01) | (1 << WGM00);		Tappert försök
 	TCCR1A = (1 << COM1A1) | (1 << COM1A0);
-	TCCR1B = (1 << CS12);
-	OCR1A = 781.25;
+	TCCR1B = (1 << CS11) | (1 << CS10);
+	OCR1A = 781.25*2;
 	TCNT1 = 0;
 	
 	
@@ -132,22 +132,22 @@ void spawn(void (* function)(int), int arg) {
 
 
 ISR(TIMER1_COMPA_vect) {
-	DISABLE();
+	//DISABLE();
 	enqueue(current, &readyQ);
 	spawn(blink, 2);
 	dispatch(dequeue(&readyQ));
-	ENABLE();
+	//ENABLE();
 }
 
 
 
 
 ISR(PCINT1_vect) {
-	DISABLE();
+	//DISABLE();
 	enqueue(current, &readyQ);
 	spawn(button, 0);
 	dispatch(dequeue(&readyQ));
-	ENABLE();
+	//ENABLE();
 }
 
 

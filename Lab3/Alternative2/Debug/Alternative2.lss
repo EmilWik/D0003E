@@ -23,11 +23,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_frame  00000224  00000000  00000000  0000317c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000055a  00000000  00000000  000033a0  2**0
+ 10 .debug_str    00000568  00000000  00000000  000033a0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000ca5  00000000  00000000  000038fa  2**0
+ 11 .debug_loc    00000ca5  00000000  00000000  00003908  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000090  00000000  00000000  0000459f  2**0
+ 12 .debug_ranges 00000090  00000000  00000000  000045ad  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -898,31 +898,31 @@ int main() {
  6ac:	20 83       	st	Z, r18
  6ae:	10 82       	st	Z, r1
  6b0:	40 ec       	ldi	r20, 0xC0	; 192
- 6b2:	40 93 e4 00 	sts	0x00E4, r20	; 0x8000e4 <__DATA_REGION_ORIGIN__+0x84>
+ 6b2:	40 93 e4 00 	sts	0x00E4, r20	; 0x8000e4 <__TEXT_REGION_LENGTH__+0x7e00e4>
  6b6:	37 e3       	ldi	r19, 0x37	; 55
- 6b8:	30 93 e5 00 	sts	0x00E5, r19	; 0x8000e5 <__DATA_REGION_ORIGIN__+0x85>
+ 6b8:	30 93 e5 00 	sts	0x00E5, r19	; 0x8000e5 <__TEXT_REGION_LENGTH__+0x7e00e5>
  6bc:	37 e0       	ldi	r19, 0x07	; 7
- 6be:	30 93 e6 00 	sts	0x00E6, r19	; 0x8000e6 <__DATA_REGION_ORIGIN__+0x86>
+ 6be:	30 93 e6 00 	sts	0x00E6, r19	; 0x8000e6 <__TEXT_REGION_LENGTH__+0x7e00e6>
  6c2:	5f e0       	ldi	r21, 0x0F	; 15
- 6c4:	50 93 e7 00 	sts	0x00E7, r21	; 0x8000e7 <__DATA_REGION_ORIGIN__+0x87>
+ 6c4:	50 93 e7 00 	sts	0x00E7, r21	; 0x8000e7 <__TEXT_REGION_LENGTH__+0x7e00e7>
  6c8:	35 b1       	in	r19, 0x05	; 5
  6ca:	30 58       	subi	r19, 0x80	; 128
  6cc:	35 b9       	out	0x05, r19	; 5
  6ce:	54 b9       	out	0x04, r21	; 4
  6d0:	00 00       	nop
- 6d2:	20 93 6c 00 	sts	0x006C, r18	; 0x80006c <__DATA_REGION_ORIGIN__+0xc>
+ 6d2:	20 93 6c 00 	sts	0x006C, r18	; 0x80006c <__TEXT_REGION_LENGTH__+0x7e006c>
  6d6:	2d bb       	out	0x1d, r18	; 29
  6d8:	22 e0       	ldi	r18, 0x02	; 2
- 6da:	20 93 6f 00 	sts	0x006F, r18	; 0x80006f <__DATA_REGION_ORIGIN__+0xf>
- 6de:	40 93 80 00 	sts	0x0080, r20	; 0x800080 <__DATA_REGION_ORIGIN__+0x20>
- 6e2:	24 e0       	ldi	r18, 0x04	; 4
- 6e4:	20 93 81 00 	sts	0x0081, r18	; 0x800081 <__DATA_REGION_ORIGIN__+0x21>
- 6e8:	2d e0       	ldi	r18, 0x0D	; 13
- 6ea:	33 e0       	ldi	r19, 0x03	; 3
- 6ec:	30 93 89 00 	sts	0x0089, r19	; 0x800089 <__DATA_REGION_ORIGIN__+0x29>
- 6f0:	20 93 88 00 	sts	0x0088, r18	; 0x800088 <__DATA_REGION_ORIGIN__+0x28>
- 6f4:	10 92 85 00 	sts	0x0085, r1	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
- 6f8:	10 92 84 00 	sts	0x0084, r1	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
+ 6da:	20 93 6f 00 	sts	0x006F, r18	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
+ 6de:	40 93 80 00 	sts	0x0080, r20	; 0x800080 <__TEXT_REGION_LENGTH__+0x7e0080>
+ 6e2:	23 e0       	ldi	r18, 0x03	; 3
+ 6e4:	20 93 81 00 	sts	0x0081, r18	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+ 6e8:	2a e1       	ldi	r18, 0x1A	; 26
+ 6ea:	36 e0       	ldi	r19, 0x06	; 6
+ 6ec:	30 93 89 00 	sts	0x0089, r19	; 0x800089 <__TEXT_REGION_LENGTH__+0x7e0089>
+ 6f0:	20 93 88 00 	sts	0x0088, r18	; 0x800088 <__TEXT_REGION_LENGTH__+0x7e0088>
+ 6f4:	10 92 85 00 	sts	0x0085, r1	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
+ 6f8:	10 92 84 00 	sts	0x0084, r1	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
  6fc:	21 e0       	ldi	r18, 0x01	; 1
  6fe:	30 e0       	ldi	r19, 0x00	; 0
  700:	30 93 05 01 	sts	0x0105, r19	; 0x800105 <__data_end+0x1>
@@ -1020,6 +1020,7 @@ int main() {
 
 000007f0 <__vector_7>:
 }
+
 
 
 mutex mutexBlink;

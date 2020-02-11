@@ -168,7 +168,7 @@ void computePrimes(int pos) {
 
 int main() {	
 	spawn(computePrimes, 0);
-	blink(3);
+	button(3);
 }
 
 

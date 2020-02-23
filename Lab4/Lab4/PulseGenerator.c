@@ -70,7 +70,7 @@ void generatePulse(PulseGenerator *self){
 	else{
 		self->isHigh = !self->isHigh;
 			
-		AFTER(MSEC(self->frequency*500), self, generatePulse, NULL);	
+		AFTER(USEC(500000/self->frequency), self, generatePulse, NULL);	
 	}
 	
 	int temp[] = {self->isHigh, self->pin};

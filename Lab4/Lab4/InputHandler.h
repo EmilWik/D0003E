@@ -20,7 +20,7 @@ typedef struct {
 
 
 
-void joystickCrossways(InputHandler *self, int bl);		// Up, Down & Depressed
+void joystickCrossways(InputHandler *self);		// Up, Down & Depressed
 
 void joystickSideways(InputHandler *self, int arg);		// Left & Right
 

@@ -4,17 +4,19 @@
 
 #include "TinyTimber.h"
 #include "PortWriter.h"
+#include "GUI.h"
 
 typedef struct {
 	Object super;
 	PortWriter *pWriter;
+	GUI *gui;
 	int pin, frequency, savedFreq;
 	int isHigh;
 } PulseGenerator;
 
 //      Initialization macro for class Object.
-#define initPulseGenerator(portWriter, PIN) \
-		{initObject(), portWriter, PIN, 0, 0, 0}
+#define initPulseGenerator(portWriter, gui, PIN) \
+		{initObject(), portWriter, gui, PIN, 0, 0, 0}
 
 
 
@@ -22,7 +24,7 @@ void increaseFrequency(PulseGenerator *self, int amount);
 
 void saveOrLoadFrequency(PulseGenerator *self);
 
-void generatePulse(PulseGenerator *self, int bl);
+void generatePulse(PulseGenerator *self);
 
 
 #endif /* PULSEGENERATOR_H_ */

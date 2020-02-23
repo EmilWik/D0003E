@@ -8,8 +8,8 @@
 
 GUI				gui			 = initGUI();
 PortWriter		portWriter	 = initPortWriter();
-PulseGenerator	pGen1		 = initPulseGenerator(&portWriter, 4);
-PulseGenerator	pGen2		 = initPulseGenerator(&portWriter, 6);
+PulseGenerator	pGen1		 = initPulseGenerator(&portWriter, &gui, 4);
+PulseGenerator	pGen2		 = initPulseGenerator(&portWriter, &gui, 6);
 InputHandler	inputHandler = initInputHandler(&gui, &pGen1, &pGen2);
 
 

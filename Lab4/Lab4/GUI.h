@@ -16,12 +16,10 @@ typedef struct {
 void initLCD();			
 
 // Prints the 2 digit number to the LCD
-void printAt(int num, int pos);
+void printAt(GUI *self, int num);
 
 // Changes the indicator that shows which of the two pulse generators that is currently receiving user input
 void switchFocus(GUI *self);
 
-
-void test(GUI *self , int arg);
 
 #endif /* GUI_H_ */

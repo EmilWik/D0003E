@@ -2,25 +2,27 @@
 #ifndef PULSEGENERATOR_H_
 #define PULSEGENERATOR_H_
 
+#include "TinyTimber.h"
+#include "PortWriter.h"
+
 typedef struct {
 	Object super;
-	Timer timer;
-	int pin, LCDPosition;
+	PortWriter *pWriter;
+	int pin, frequency, savedFreq;
+	int isHigh;
 } PulseGenerator;
 
 //      Initialization macro for class Object.
-#define initPulseGenerator(pin, LCDPosition) \
-		{initObject(), initTimer(), pin, LCDPosition}
+#define initPulseGenerator(portWriter, PIN) \
+		{initObject(), portWriter, PIN, 0, 0, 0}
 
 
 
-void increaseFrequency(int amount);
+void increaseFrequency(PulseGenerator *self, int amount);
 
+void saveOrLoadFrequency(PulseGenerator *self);
 
-void saveFrequency(int frequency);
-
-
-void loadFrequency();
+void generatePulse(PulseGenerator *self, int bl);
 
 
 #endif /* PULSEGENERATOR_H_ */

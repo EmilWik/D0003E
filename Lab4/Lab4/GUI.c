@@ -7,39 +7,6 @@ typedef struct {
 } GUI;
 
 
-void initLCD(){
-	// LCD
-	CLKPR = 0x80;
-	CLKPR = 0x00;
-
-	LCDCRA = (1 << LCDEN) | (1 << LCDAB);
-	LCDCRB = (1 << LCDMUX0) | (1 << LCDMUX1) | (1 << LCDPM2) | (1 << LCDPM1) | (1 << LCDPM0);
-	LCDFRR = (1 << LCDCD2) | (1 << LCDCD1) | (1 << LCDCD0);
-	LCDCCR = (1 << LCDCC3) | (1 << LCDCC2) | (1 << LCDCC1) | (1 << LCDCC0);
-	
-	
-	/*
-	LCDDR1 = (1 << 2);
-	
-	
-	// Button
-	PORTB += (1<<PB7);
-	DDRB = (1<<DDB3)|(1<<DDB2)|(1<<DDB1)|(1<<DDB0);
-	
-	//Insert nop for synchronization
-	asm("nop");
-	
-	// Timer
-	PCMSK1 = (1 << PCINT15);
-	EIMSK = (1 << PCIE1);
-	TIMSK1 = (1 << OCIE1A);
-	TCCR1A = (1 << COM1A1) | (1 << COM1A0);
-	TCCR1B = (1 << CS11) | (1 << CS10);
-	OCR1A = 781.25*2;
-	TCNT1 = 0;
-	*/
-}
-
 
 static void writeChar(char c, int pos){
 	int column = pos / 2;						// Determines which pair of digits to write to
@@ -135,6 +102,43 @@ void printAt(GUI *self, int num) {
 }
 
 
+
+void initLCD(){
+	// LCD
+	CLKPR = 0x80;
+	CLKPR = 0x00;
+
+	LCDCRA = (1 << LCDEN) | (1 << LCDAB);
+	LCDCRB = (1 << LCDMUX0) | (1 << LCDMUX1) | (1 << LCDPM2) | (1 << LCDPM1) | (1 << LCDPM0);
+	LCDFRR = (1 << LCDCD2) | (1 << LCDCD1) | (1 << LCDCD0);
+	LCDCCR = (1 << LCDCC3) | (1 << LCDCC2) | (1 << LCDCC1) | (1 << LCDCC0);
+	
+	
+	
+	// Button
+	PORTB |= (1<<PB7)|(1<<PB6)|(1<<PB4);
+	PORTE |= (1<<PE2)|(1<<PE3);
+	DDRB   = (1<<DDB5)|(1<<DDB3)|(1<<DDB2)|(1<<DDB1)|(1<<DDB0);
+	//DDRE   = (1<<DDE6)|(1<<DDE4);
+	
+	//Insert nop for synchronization
+	asm("nop");
+
+	PCMSK0 = (1<<PCINT3)|(1<<PCINT2);
+	PCMSK1 = (1<<PCINT15)|(1<<PCINT14)|(1<<PCINT12);
+	EIMSK = (1 << PCIE1)|(1 << PCIE0);
+
+
+
+	// Prints startup chars
+	LCDDR1 = (1 << 2);
+	writeChar('0', 0);
+	writeChar('0', 1);
+	writeChar('0', 4);
+	writeChar('0', 5);
+}
+
+
 void switchFocus(GUI *self){
 	self->focus = !self->focus;
 	LCDDR1 = (1 <<( 2 - self->focus));
@@ -142,16 +146,5 @@ void switchFocus(GUI *self){
 
 
 
-void test(GUI *self , int arg){
 
-	AFTER(MSEC(10), self, printAt, 31);	
-	
-	AFTER(MSEC(400), self, switchFocus, NULL);
-	AFTER(MSEC(1000), self, printAt, 41);	
-	
-	AFTER(MSEC(1400), self, switchFocus, NULL);
-	AFTER(MSEC(2000), self, printAt, 59);	
-	
-	AFTER(MSEC(2400), self, switchFocus, NULL);
-	AFTER(MSEC(3000), self, printAt, 26);	
-}
+

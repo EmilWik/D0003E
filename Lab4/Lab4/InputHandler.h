@@ -8,24 +8,23 @@
 
 typedef struct {
 	Object super;
-	PulseGenerator pGen1, pGen2;
-	GUI gui;
+	PulseGenerator *pGen[2];
+	GUI *gui;
+	int risingEdge;
 } InputHandler;
 
 
 //      Initialization macro for class Object.
-#define initInputHandler(PulseGenerator1, PulseGenerator2, gui) \
-		{ NULL, NULL, PulseGenerator1, PulseGenerator2, gui};
+#define initInputHandler(gui, pGen1, pGen2) \
+		{ initObject(), {pGen1, pGen2}, gui, 1}
 
 
 
-void joystickUp();
+void joystickCrossways(InputHandler *self, int bl);		// Up, Down & Depressed
 
-void joystickDown();
+void joystickSideways(InputHandler *self, int arg);		// Left & Right
 
-void joystickSideways();
-
-void joystickPressed();
+void initialize(InputHandler *self);
 
 
 #endif /* INPUTHANDLER_H_ */

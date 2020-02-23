@@ -1,22 +1,28 @@
-
-#include "GUI.h"
 #include "TinyTimber.h"
+#include "GUI.h"
+#include "InputHandler.h"
+#include "PulseGenerator.h"
+#include "PortWriter.h"
+
+
+
+GUI				gui			 = initGUI();
+PortWriter		portWriter	 = initPortWriter();
+PulseGenerator	pGen1		 = initPulseGenerator(&portWriter, 4);
+PulseGenerator	pGen2		 = initPulseGenerator(&portWriter, 6);
+InputHandler	inputHandler = initInputHandler(&gui, &pGen1, &pGen2);
+
 
 int main(void)
 {
 	
-	initLCD();
+
+	INSTALL(&inputHandler, joystickCrossways, IRQ_PCINT1);	// Up, Down & Depressed
+	INSTALL(&inputHandler, joystickSideways, IRQ_PCINT0);	// Left & Right
 	
-	GUI gui = initGUI();
-	
-	INSTALL(&gui, switchFocus, IRQ_PCINT1);
-	
-	return TINYTIMBER(&gui, test, 0);
-	
-	
-	//printAt(31, 0);
-	//printAt(41, 4);
+	return TINYTIMBER(&inputHandler, initialize, NULL);
 }
+
 
 
 

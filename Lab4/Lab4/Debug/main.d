@@ -1,5 +1,12 @@
-main.d main.o: .././main.c .././GUI.h .././TinyTimber.h
+main.d main.o: .././main.c .././TinyTimber.h .././GUI.h \
+ .././InputHandler.h .././PulseGenerator.h .././PortWriter.h
+
+.././TinyTimber.h:
 
 .././GUI.h:
 
-.././TinyTimber.h:
+.././InputHandler.h:
+
+.././PulseGenerator.h:
+
+.././PortWriter.h:

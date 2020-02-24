@@ -119,7 +119,7 @@ void initLCD(){
 	PORTB |= (1<<PB7)|(1<<PB6)|(1<<PB4);
 	PORTE |= (1<<PE2)|(1<<PE3);
 	DDRB   = (1<<DDB5)|(1<<DDB3)|(1<<DDB2)|(1<<DDB1)|(1<<DDB0);
-	//DDRE   = (1<<DDE6)|(1<<DDE4);
+	DDRE   = (1<<DDE6)|(1<<DDE4);
 	
 	//Insert nop for synchronization
 	asm("nop");

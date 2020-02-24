@@ -29,34 +29,30 @@ void initialize(InputHandler *self){
 void joystickCrossways(InputHandler *self){
 	
 	
-	#define SELECTED_PGEN self->pGen[ self->gui->focus] 
+	#define SELECTED_PGEN self->pGen[self->gui->focus] 
 	#define P4 (1<<PINB4)
 	#define P6 (1<<PINB6)
 	#define P7 (1<<PINB7)
-	//#define repPeriod 150
+	#define repPeriod 450
 
 	
 	
 	// Depressed
 	if(!(PINB-P6-P7)){
 		ASYNC(SELECTED_PGEN, saveOrLoadFrequency, NULL);
-		//ASYNC(self->gui, printAt, SELECTED_PGEN->frequency);					// Print new value to screen
+
 	}
 	
 	// Up
 	if(!(PINB-P4-P7)){
-		ASYNC(SELECTED_PGEN, increaseFrequency, 1);
-		//ASYNC(self->gui, printAt, SELECTED_PGEN->frequency);
-			
-		//AFTER(MSEC(bl+repPeriod), self, joystickCrossways, bl+repPeriod);		// For holding down button
+		AFTER(MSEC(repPeriod), SELECTED_PGEN, increaseFrequency, 1);
+
 	}
 	
 	// Down
 	if(!(PINB-P4-P6)){
-		ASYNC(SELECTED_PGEN, increaseFrequency, -1);
-		//ASYNC(self->gui, printAt, SELECTED_PGEN->frequency);
-		
-		//AFTER(MSEC(bl+repPeriod), self, joystickCrossways, bl+repPeriod);		// For holding down button
+		AFTER(MSEC(repPeriod), SELECTED_PGEN, increaseFrequency, -1);
+
 	}
 	
 	

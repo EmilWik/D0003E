@@ -53,6 +53,7 @@ void saveOrLoadFrequency(PulseGenerator *self){
 	}
 	else{
 		self->savedFreq = self->frequency; 
+		self->frequency = 0;
 	}
 	
 	

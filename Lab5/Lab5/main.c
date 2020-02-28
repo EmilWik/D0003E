@@ -6,9 +6,6 @@
 
 #include <avr/io.h>
 
-#include <avr/interrupt.h>
-
-#include <signal.h>
 
 //#define FOSC 1843200// Clock Speed
 #define FOSC 8000000UL

@@ -5,7 +5,7 @@
 #include "InputHandler.h"
 
 #include <avr/io.h>
-
+#include <avr/interrupt.h>
 
 //#define FOSC 1843200// Clock Speed
 #define FOSC 8000000UL

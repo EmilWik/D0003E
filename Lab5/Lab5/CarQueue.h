@@ -19,7 +19,7 @@
 typedef struct {
 	Object super;
 	Bridge *bridge;
-	SimWriter *simWriter;
+	GUI *gui;
 	int carsInQueue;
 	int dirr;
 } CarQueue;

@@ -131,10 +131,13 @@ void initLCD(){
 
 	// Prints startup chars
 //	LCDDR1 = (1 << 2);
-//	writeChar('0', 0);
-//	writeChar('0', 1);
-//	writeChar('0', 4);
-//	writeChar('0', 5);
+	writeChar('0', 0);
+	writeChar('0', 1);
+	writeChar('0', 2);
+	writeChar('0', 3);
+	writeChar('0', 4);
+	writeChar('0', 5);
+	
 }
 
 

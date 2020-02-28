@@ -15,7 +15,7 @@ typedef struct {
 void initLCD();			
 
 // Prints the 2 digit number to the LCD
-void printAt(GUI *self, int num);
+//void printAt(GUI *self, int num);
 
 
 

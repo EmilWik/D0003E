@@ -3,20 +3,20 @@
 #define BRIDGE_H_
 
 #include "TinyTimber.h"
-#include "SimWriter.h"
+#include "GUI.h"
 
 
 
 typedef struct {
 	Object super;
-	SimWriter *simWriter;
+	GUI *gui;
 	int carsOnBridge;
 } Bridge;
 
 
 
-#define initBridge(simWriter) \
-{ initObject(), simWriter, 0}
+#define initBridge(gui) \
+{ initObject(), gui, 0}
 
 
 void addCarToBridge(Bridge *self);

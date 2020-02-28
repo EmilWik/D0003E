@@ -2,14 +2,14 @@
 
 
 #include "TinyTimber.h"
-#include "SimWriter.h"
+#include "GUI.h"
 
-#define TRAVEL_TIME 5
+
 
 
 typedef struct {
 	Object super;
-	SimWriter *simWriter;
+	GUI *gui;
 	int carsOnBridge;
 } Bridge;
 
@@ -18,13 +18,17 @@ typedef struct {
 
 void removeCarFromBridge(Bridge *self){
 	--(self->carsOnBridge);
-	ASYNC(self, carsOnBridge, self->carsOnBridge);
+	ASYNC(self->gui, carsOnBridge, self->carsOnBridge);
 }
 
 
 void addCarToBridge(Bridge *self){
 	++(self->carsOnBridge);
-	ASYNC(self, carsOnBridge, self->carsOnBridge);
+	ASYNC(self->gui, carsOnBridge, self->carsOnBridge);
+	
+	
+	#define TRAVEL_TIME 5
+	
 	AFTER(SEC(TRAVEL_TIME), self, removeCarFromBridge, NULL);
 }
 

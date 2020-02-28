@@ -1,5 +1,9 @@
 #include "TinyTimber.h"
+#include "Bridge.h"
+#include "CarQueue.h"
 #include "GUI.h"
+#include "InputHandler.h"
+
 #include <avr/io.h>
 
 #include <avr/interrupt.h>
@@ -11,7 +15,6 @@
 #define BAUD 9600
 #define MYUBRR FOSC/16/BAUD-1
 
-GUI gui = initGUI();
 
 
 void USART_Init( unsigned int ubrr){
@@ -76,7 +79,48 @@ unsigned int USART_Receive( void ){
 //IRQ_USART0_RX
 
 
+
+
+/*
+enum Dirr{
+	North = 0,
+	South = 1
+};
+*/
+
+GUI gui = initGUI();
+Bridge bridge = initBridge(&gui);
+CarQueue northQueue = initCarQueue(&bridge, &gui, 0);
+CarQueue southQueue = initCarQueue(&bridge, &gui, 1);
+InputHandler inputHandler = initInputHandler(&northQueue, &southQueue, &bridge);
+
+
+
+
+
+
+
+
+
+
 void main( void ){
+	
+	initLCD();
+	USART_Init(MYUBRR);
+
+	
+	
+	INSTALL(&inputHandler, test, IRQ_USART0_RX);
+	
+	return TINYTIMBER(&ob, loop, NULL);
+	
+	
+	
+	
+	
+	
+	
+	/*
 	sei();
 	
 	USART_Init ( MYUBRR );
@@ -94,7 +138,7 @@ void main( void ){
 		 while ((UCSR0A & (1 << UDRE0)) == 0) {}; // Do nothing until UDR is ready for more data to be written to it
 		 UDR0 = ReceivedByte; // Echo back the received byte back to the computer
 	 }
-	
+	*/
 	
 	/*
 	

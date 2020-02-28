@@ -138,46 +138,37 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Controller\Bridge.c">
+    <Compile Include="Bridge.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Controller\Bridge.h">
+    <Compile Include="Bridge.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Controller\CarQueue.c">
+    <Compile Include="CarQueue.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Controller\CarQueue.h">
+    <Compile Include="CarQueue.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Controller\GUI.c">
+    <Compile Include="GUI.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Controller\GUI.h">
+    <Compile Include="GUI.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Controller\InputHandler.c">
+    <Compile Include="InputHandler.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Controller\InputHandler.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Controller\PortWriter.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Controller\SimWriter.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Controller\SimWriter.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Controller\TrafficLight.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Controller\TrafficLight.h">
+    <Compile Include="InputHandler.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SimWriter.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SimWriter.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="TinyTimber.c">
@@ -186,9 +177,12 @@
     <Compile Include="TinyTimber.h">
       <SubType>compile</SubType>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controller" />
+    <Compile Include="TrafficLight.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="TrafficLight.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

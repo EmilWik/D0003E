@@ -10,12 +10,12 @@ typedef struct {
 	int focus;
 } TrafficLight;
 
-
+/*
 enum Dirr{
-	North = 0;
-	South = 1;
+	North = 0,
+	South = 1
 };
-
+*/
 /*
 void greenLight(TrafficLight* self){
 	ASYNC(self->carQueue[self->focus], sendCar, NULL);
@@ -32,12 +32,12 @@ void switchFocus(TrafficLight* self){
 void trafficLight(TrafficLight* self){
 	
 	switch(self->focus){
-		case Dirr.North:
+		case 0:
 			SYNC(self->simWriter, southboundRedLight, NULL);
 			AFTER(SEC(5),self->simWriter, northboundGreenLight, NULL);
 		break;
 		
-		case Dirr.South:
+		case 1:
 			SYNC(self->simWriter, northboundRedLight, NULL);
 			AFTER(SEC(5), self->simWriter, southboundGreenLight, NULL);
 		break;

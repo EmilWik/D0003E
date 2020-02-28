@@ -19,7 +19,7 @@ typedef struct {
 
 #define initInputHandler(southQueue, northQueue, bridge) { initObject(), northQueue, southQueue, bridge}
 	
-void carsUpdate(InputHandler *self);
+void test(InputHandler *self);
 
 
 

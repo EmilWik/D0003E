@@ -15,10 +15,6 @@
 
 
 
-enum Dirr{
-	North = 0;
-	South = 1;
-	};
 
 typedef struct {
 	Object super;
@@ -29,8 +25,8 @@ typedef struct {
 } CarQueue;
 
 
-#define initCarQueue(bridge, simWriter) \
-{ initObject(), bridge, simWriter, 0, Dirr.North}
+#define initCarQueue(bridge, simWriter, dirr) \
+{ initObject(), bridge, simWriter, 0, dirr}
 
 
 void addCar(CarQueue *self);

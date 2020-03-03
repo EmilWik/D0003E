@@ -11,13 +11,14 @@
 
 typedef struct {
 	Object super;
+	GUI *gui;
 	CarQueue *northQueue;
 	CarQueue *southQueue;
 	Bridge *bridge;
 } InputHandler;
 
 
-#define initInputHandler(southQueue, northQueue, bridge) { initObject(), northQueue, southQueue, bridge}
+#define initInputHandler(gui,southQueue, northQueue, bridge) { initObject(), gui,northQueue, southQueue, bridge}
 	
 void test(InputHandler *self);
 

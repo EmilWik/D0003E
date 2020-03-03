@@ -112,7 +112,7 @@ void initLCD(){
 	LCDFRR = (1 << LCDCD2) | (1 << LCDCD1) | (1 << LCDCD0);
 	LCDCCR = (1 << LCDCC3) | (1 << LCDCC2) | (1 << LCDCC1) | (1 << LCDCC0);
 	
-	
+	/*
 	
 	// Button
 	PORTB |= (1<<PB7)|(1<<PB6)|(1<<PB4);
@@ -128,7 +128,7 @@ void initLCD(){
 	EIMSK = (1 << PCIE1)|(1 << PCIE0);
 
 
-
+*/
 	// Prints startup chars
 //	LCDDR1 = (1 << 2);
 	writeChar('0', 0);
@@ -152,7 +152,7 @@ void carsInNorthQueue(GUI *self, int amount){
 }
 
 void carsInSouthQueue(GUI *self, int amount){
-	printAt(5, amount);
+	printAt(4, amount);
 }
 
 

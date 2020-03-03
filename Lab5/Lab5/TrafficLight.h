@@ -11,19 +11,17 @@
 typedef struct {
 	Object super;
 	SimWriter *simWriter;
-	//CarQueue *carQueue[2];
 	int focus;
 } TrafficLight;
 
 
-#define initTrafficLight(simWriter, southQueue, northQueue) { initObject(), simWriter, /*{northQuue, southQueue},*/ 0}
+#define initTrafficLight(simWriter) { initObject(), simWriter, 0}
 
 //void greenLight(TrafficLight* self);
 	
 //void switchFocus(TrafficLight* self);
 
-void trafficLight(TrafficLight* self);
-
+void trafficLightFunc(TrafficLight* self);
 
 
 #endif /* TRAFFICLIGHT_H_ */

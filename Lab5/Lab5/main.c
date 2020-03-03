@@ -3,7 +3,8 @@
 #include "CarQueue.h"
 #include "GUI.h"
 #include "InputHandler.h"
-
+#include "TrafficLight.h"
+#include "SimWriter.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
@@ -29,7 +30,6 @@ void USART_Init( unsigned int ubrr){
 
 
 
-
 /*
 enum Dirr{
 	North = 0,
@@ -41,7 +41,9 @@ GUI gui = initGUI();
 Bridge bridge = initBridge(&gui);
 CarQueue northQueue = initCarQueue(&bridge, &gui, 0);
 CarQueue southQueue = initCarQueue(&bridge, &gui, 1);
-InputHandler inputHandler = initInputHandler(&northQueue, &southQueue, &bridge);
+InputHandler inputHandler = initInputHandler(&gui,&northQueue, &southQueue, &bridge);
+SimWriter simWriter = initSimWriter();
+TrafficLight trafficLight = initTrafficLight(&simWriter);
 
 
 
@@ -54,16 +56,17 @@ InputHandler inputHandler = initInputHandler(&northQueue, &southQueue, &bridge);
 
 void main( void ){
 	
-	//initLCD();
-	USART_Init(MYUBRR);
 
-	
+	USART_Init(MYUBRR);
+	initLCD();
+
 	
 	INSTALL(&inputHandler, test, IRQ_USART0_RX);
 	
 	sei();
 	
-	return TINYTIMBER(&gui, initLCD, NULL);
+	
+	return TINYTIMBER(&trafficLight, trafficLightFunc, NULL);
 	
 	
 	

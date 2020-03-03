@@ -3,10 +3,11 @@
 #include "SimWriter.h"
 //#include "CarQueue.h"
 
+#include <avr/io.h>
+
 typedef struct {
 	Object super;
 	SimWriter *simWriter;
-	//CarQueue *carQueue[2];
 	int focus;
 } TrafficLight;
 
@@ -29,7 +30,8 @@ void switchFocus(TrafficLight* self){
 */
 
 
-void trafficLight(TrafficLight* self){
+void trafficLightFunc(TrafficLight* self){
+	
 	
 	switch(self->focus){
 		case 0:
@@ -50,9 +52,9 @@ void trafficLight(TrafficLight* self){
 	self->focus = !self->focus;
 	
 	
-	#define ON_TIME 5	// Time light is green
+	#define ON_TIME 3	// Time light is green
 	
-	AFTER(SEC(ON_TIME), self->simWriter, southboundGreenLight, NULL);
+	AFTER(SEC(ON_TIME + 5), self, trafficLightFunc, NULL);
 	
 	
 	

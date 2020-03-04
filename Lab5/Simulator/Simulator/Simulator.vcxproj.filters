@@ -30,6 +30,9 @@
     <ClCompile Include="Simulator.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="globals.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="globals.h">
@@ -38,13 +41,13 @@
     <ClInclude Include="UserInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SerialPort.h">
+    <ClInclude Include="Simulator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Simulator.h">
+    <ClInclude Include="SerialPort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,11 +1,12 @@
 #include "globals.h"		// northCars, southCars
 #include "SerialPort.h"		// writeToAVR
 #include <stdio.h>			// fflush
+#include <unistd.h>			// usleep
 #include <pthread.h>
 
 
 
-void* driveOverBridge(void) {
+void* driveOverBridge(void *arg) {
 	#define DRIVE_TIME 5000000			// 5s
 
 	++bridgeCars;
@@ -17,7 +18,7 @@ void* driveOverBridge(void) {
 
 
 
-void* simulator(void) {
+void* simulator(void* arg) {
 
 	#define NORTHBOUND_BRIDGE_ENTRY	0x2	
 	#define SOUTHBOUND_BRIDGE_ENTRY	0x8	
@@ -26,7 +27,7 @@ void* simulator(void) {
 
 	while (1) {
 
-		while (northGreen) {
+		while (northGreen && (northCars > 0)) {
 			--northCars;
 			
 			pthread_t car_t;
@@ -37,13 +38,13 @@ void* simulator(void) {
 			usleep(WAIT_TIME);
 		}
 
-		while (southGreen) {
+		while (southGreen && (southCars > 0)) {
 			--southCars;
 
 			pthread_t car_t;
 			pthread_create(&car_t, NULL, driveOverBridge, NULL);
 
-			writeToAVR(NORTHBOUND_BRIDGE_ENTRY);
+			writeToAVR(SOUTHBOUND_BRIDGE_ENTRY);
 			usleep(WAIT_TIME);
 		}
 

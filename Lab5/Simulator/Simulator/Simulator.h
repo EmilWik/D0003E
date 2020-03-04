@@ -1,3 +1,4 @@
 #pragma once
 
-void* simulator(void);
+void* simulator(void* arg);
+

@@ -1,7 +1,6 @@
 
 #include "TinyTimber.h"
 #include "SimWriter.h"
-//#include "CarQueue.h"
 
 #include <avr/io.h>
 
@@ -11,35 +10,21 @@ typedef struct {
 	int focus;
 } TrafficLight;
 
-/*
-enum Dirr{
-	North = 0,
-	South = 1
-};
-*/
-/*
-void greenLight(TrafficLight* self){
-	ASYNC(self->carQueue[self->focus], sendCar, NULL);
-}
-*/
 
-/*
-void switchFocus(TrafficLight* self){
-	self->focus = !self->focus;
-}
-*/
 
+static enum Direction{ North, South};
+	
 
 void trafficLightFunc(TrafficLight* self){
 	
 	
 	switch(self->focus){
-		case 0:
+		case North:
 			SYNC(self->simWriter, southboundRedLight, NULL);
 			AFTER(SEC(5),self->simWriter, northboundGreenLight, NULL);
 		break;
 		
-		case 1:
+		case South:
 			SYNC(self->simWriter, northboundRedLight, NULL);
 			AFTER(SEC(5), self->simWriter, southboundGreenLight, NULL);
 		break;
@@ -52,7 +37,7 @@ void trafficLightFunc(TrafficLight* self){
 	self->focus = !self->focus;
 	
 	
-	#define ON_TIME 3	// Time light is green
+	#define ON_TIME 8	// Time light is green
 	
 	AFTER(SEC(ON_TIME + 5), self, trafficLightFunc, NULL);
 	

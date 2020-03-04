@@ -1,8 +1,9 @@
 #include "globals.h"
 #include "SerialPort.h"
-#include <stdint.h>
-#include <fcntl.h>
+#include <stdio.h>
 #include <termios.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 
 int input(void) {

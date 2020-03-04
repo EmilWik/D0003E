@@ -25,7 +25,7 @@ Bit 3: Southbound red light status
 
 void write(SimWriter *self){
 	while ((UCSR0A & (1 << UDRE0)) == 0) {}; // Do nothing until UDR is ready for more data to be written to it
-	UDR0 = (self->nG << 0) | (self->nR << 1) |( self->sG << 2) | (self->sR << 3); 
+	UDR0 =  (self->nG << 0) | (self->nR << 1) |( self->sG << 2) | (self->sR << 3); 
 }
 
 

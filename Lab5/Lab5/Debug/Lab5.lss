@@ -9,25 +9,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
   2 .bss          00000363  0080013c  0080013c  00002476  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00002476  2**0
+  3 .comment      00000060  00000000  00000000  00002476  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000024a8  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000024d8  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000298  00000000  00000000  000024e8  2**0
+  5 .debug_aranges 00000298  00000000  00000000  00002518  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000032b0  00000000  00000000  00002780  2**0
+  6 .debug_info   000032cd  00000000  00000000  000027b0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00001369  00000000  00000000  00005a30  2**0
+  7 .debug_abbrev 00001383  00000000  00000000  00005a7d  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00001760  00000000  00000000  00006d99  2**0
+  8 .debug_line   00001760  00000000  00000000  00006e00  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000d10  00000000  00000000  000084fc  2**2
+  9 .debug_frame  00000d10  00000000  00000000  00008560  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000009fa  00000000  00000000  0000920c  2**0
+ 10 .debug_str    00000a14  00000000  00000000  00009270  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000031b6  00000000  00000000  00009c06  2**0
+ 11 .debug_loc    000031b6  00000000  00000000  00009c84  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000300  00000000  00000000  0000cdbc  2**0
+ 12 .debug_ranges 00000300  00000000  00000000  0000ce3a  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -108,12 +108,6 @@ Disassembly of section .text:
       aa:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 000000ae <removeCarFromBridge>:
-	int carsOnBridge;
-} Bridge;
-
-
-
-void removeCarFromBridge(Bridge *self){
       ae:	cf 92       	push	r12
       b0:	df 92       	push	r13
       b2:	ef 92       	push	r14
@@ -121,7 +115,6 @@ void removeCarFromBridge(Bridge *self){
       b6:	0f 93       	push	r16
       b8:	1f 93       	push	r17
       ba:	fc 01       	movw	r30, r24
-	--(self->carsOnBridge);
       bc:	c6 80       	ldd	r12, Z+6	; 0x06
       be:	d7 80       	ldd	r13, Z+7	; 0x07
       c0:	81 e0       	ldi	r24, 0x01	; 1
@@ -129,7 +122,6 @@ void removeCarFromBridge(Bridge *self){
       c4:	d1 08       	sbc	r13, r1
       c6:	d7 82       	std	Z+7, r13	; 0x07
       c8:	c6 82       	std	Z+6, r12	; 0x06
-	ASYNC(self->gui, carsOnBridge, self->carsOnBridge);
       ca:	04 81       	ldd	r16, Z+4	; 0x04
       cc:	15 81       	ldd	r17, Z+5	; 0x05
       ce:	8b e6       	ldi	r24, 0x6B	; 107
@@ -143,7 +135,6 @@ void removeCarFromBridge(Bridge *self){
       de:	70 e0       	ldi	r23, 0x00	; 0
       e0:	cb 01       	movw	r24, r22
       e2:	0e 94 55 0e 	call	0x1caa	; 0x1caa <async>
-}
       e6:	1f 91       	pop	r17
       e8:	0f 91       	pop	r16
       ea:	ff 90       	pop	r15
@@ -153,9 +144,6 @@ void removeCarFromBridge(Bridge *self){
       f2:	08 95       	ret
 
 000000f4 <addCarToBridge>:
-
-
-void addCarToBridge(Bridge *self){
       f4:	cf 92       	push	r12
       f6:	df 92       	push	r13
       f8:	ef 92       	push	r14
@@ -165,7 +153,6 @@ void addCarToBridge(Bridge *self){
      100:	cf 93       	push	r28
      102:	df 93       	push	r29
      104:	ec 01       	movw	r28, r24
-	++(self->carsOnBridge);
      106:	ce 80       	ldd	r12, Y+6	; 0x06
      108:	df 80       	ldd	r13, Y+7	; 0x07
      10a:	8f ef       	ldi	r24, 0xFF	; 255
@@ -173,7 +160,6 @@ void addCarToBridge(Bridge *self){
      10e:	d8 0a       	sbc	r13, r24
      110:	df 82       	std	Y+7, r13	; 0x07
      112:	ce 82       	std	Y+6, r12	; 0x06
-	ASYNC(self->gui, carsOnBridge, self->carsOnBridge);
      114:	0c 81       	ldd	r16, Y+4	; 0x04
      116:	1d 81       	ldd	r17, Y+5	; 0x05
      118:	8b e6       	ldi	r24, 0x6B	; 107
@@ -187,11 +173,6 @@ void addCarToBridge(Bridge *self){
      128:	70 e0       	ldi	r23, 0x00	; 0
      12a:	cb 01       	movw	r24, r22
      12c:	0e 94 55 0e 	call	0x1caa	; 0x1caa <async>
-	
-	
-	#define TRAVEL_TIME 5
-	
-	AFTER(SEC(TRAVEL_TIME), self, removeCarFromBridge, NULL);
      130:	c1 2c       	mov	r12, r1
      132:	d1 2c       	mov	r13, r1
      134:	97 e5       	ldi	r25, 0x57	; 87
@@ -207,7 +188,6 @@ void addCarToBridge(Bridge *self){
      148:	82 e0       	ldi	r24, 0x02	; 2
      14a:	90 e0       	ldi	r25, 0x00	; 0
      14c:	0e 94 55 0e 	call	0x1caa	; 0x1caa <async>
-}
      150:	df 91       	pop	r29
      152:	cf 91       	pop	r28
      154:	1f 91       	pop	r17
@@ -219,12 +199,6 @@ void addCarToBridge(Bridge *self){
      160:	08 95       	ret
 
 00000162 <updateGUI>:
-
-
-enum Direction{ North, South};
-
-
-void updateGUI(CarQueue *self){
      162:	cf 92       	push	r12
      164:	df 92       	push	r13
      166:	ef 92       	push	r14
@@ -232,20 +206,12 @@ void updateGUI(CarQueue *self){
      16a:	0f 93       	push	r16
      16c:	1f 93       	push	r17
      16e:	fc 01       	movw	r30, r24
-	
-	switch(self->dirr){
      170:	82 85       	ldd	r24, Z+10	; 0x0a
      172:	93 85       	ldd	r25, Z+11	; 0x0b
      174:	00 97       	sbiw	r24, 0x00	; 0
      176:	c9 f0       	breq	.+50     	; 0x1aa <updateGUI+0x48>
      178:	01 97       	sbiw	r24, 0x01	; 1
      17a:	81 f4       	brne	.+32     	; 0x19c <updateGUI+0x3a>
-		case North:
-			ASYNC(self->gui, carsInNorthQueue, self->carsInQueue);
-		break;
-		
-		case South:
-			ASYNC(self->gui, carsInSouthQueue, self->carsInQueue);
      17c:	c0 84       	ldd	r12, Z+8	; 0x08
      17e:	d1 84       	ldd	r13, Z+9	; 0x09
      180:	06 81       	ldd	r16, Z+6	; 0x06
@@ -261,11 +227,6 @@ void updateGUI(CarQueue *self){
      194:	70 e0       	ldi	r23, 0x00	; 0
      196:	cb 01       	movw	r24, r22
      198:	0e 94 55 0e 	call	0x1caa	; 0x1caa <async>
-		break;
-		
-		default: /* ¯\_(?)_/¯ */ break;
-	}
-}
      19c:	1f 91       	pop	r17
      19e:	0f 91       	pop	r16
      1a0:	ff 90       	pop	r15
@@ -273,12 +234,6 @@ void updateGUI(CarQueue *self){
      1a4:	df 90       	pop	r13
      1a6:	cf 90       	pop	r12
      1a8:	08 95       	ret
-
-void updateGUI(CarQueue *self){
-	
-	switch(self->dirr){
-		case North:
-			ASYNC(self->gui, carsInNorthQueue, self->carsInQueue);
      1aa:	c0 84       	ldd	r12, Z+8	; 0x08
      1ac:	d1 84       	ldd	r13, Z+9	; 0x09
      1ae:	06 81       	ldd	r16, Z+6	; 0x06
@@ -294,12 +249,6 @@ void updateGUI(CarQueue *self){
      1c2:	70 e0       	ldi	r23, 0x00	; 0
      1c4:	cb 01       	movw	r24, r22
      1c6:	0e 94 55 0e 	call	0x1caa	; 0x1caa <async>
-			ASYNC(self->gui, carsInSouthQueue, self->carsInQueue);
-		break;
-		
-		default: /* ¯\_(?)_/¯ */ break;
-	}
-}
      1ca:	1f 91       	pop	r17
      1cc:	0f 91       	pop	r16
      1ce:	ff 90       	pop	r15
@@ -309,16 +258,12 @@ void updateGUI(CarQueue *self){
      1d6:	08 95       	ret
 
 000001d8 <addCar>:
-
-
-void addCar(CarQueue *self){
      1d8:	cf 92       	push	r12
      1da:	df 92       	push	r13
      1dc:	ef 92       	push	r14
      1de:	ff 92       	push	r15
      1e0:	0f 93       	push	r16
      1e2:	1f 93       	push	r17
-	++(self->carsInQueue);
      1e4:	fc 01       	movw	r30, r24
      1e6:	20 85       	ldd	r18, Z+8	; 0x08
      1e8:	31 85       	ldd	r19, Z+9	; 0x09
@@ -326,7 +271,6 @@ void addCar(CarQueue *self){
      1ec:	3f 4f       	sbci	r19, 0xFF	; 255
      1ee:	31 87       	std	Z+9, r19	; 0x09
      1f0:	20 87       	std	Z+8, r18	; 0x08
-	ASYNC(self, updateGUI, NULL);
      1f2:	c1 2c       	mov	r12, r1
      1f4:	d1 2c       	mov	r13, r1
      1f6:	21 eb       	ldi	r18, 0xB1	; 177
@@ -341,7 +285,6 @@ void addCar(CarQueue *self){
      208:	70 e0       	ldi	r23, 0x00	; 0
      20a:	cb 01       	movw	r24, r22
      20c:	0e 94 55 0e 	call	0x1caa	; 0x1caa <async>
-}
      210:	1f 91       	pop	r17
      212:	0f 91       	pop	r16
      214:	ff 90       	pop	r15
@@ -351,10 +294,6 @@ void addCar(CarQueue *self){
      21c:	08 95       	ret
 
 0000021e <sendCar>:
-
-
-
-void sendCar(CarQueue *self){
      21e:	cf 92       	push	r12
      220:	df 92       	push	r13
      222:	ef 92       	push	r14
@@ -364,17 +303,14 @@ void sendCar(CarQueue *self){
      22a:	cf 93       	push	r28
      22c:	df 93       	push	r29
      22e:	ec 01       	movw	r28, r24
-	if(self->carsInQueue > 0){
      230:	88 85       	ldd	r24, Y+8	; 0x08
      232:	99 85       	ldd	r25, Y+9	; 0x09
      234:	18 16       	cp	r1, r24
      236:	19 06       	cpc	r1, r25
      238:	9c f4       	brge	.+38     	; 0x260 <sendCar+0x42>
-		--(self->carsInQueue);
      23a:	01 97       	sbiw	r24, 0x01	; 1
      23c:	99 87       	std	Y+9, r25	; 0x09
      23e:	88 87       	std	Y+8, r24	; 0x08
-		ASYNC(self->bridge, addCarToBridge, NULL);
      240:	0c 81       	ldd	r16, Y+4	; 0x04
      242:	1d 81       	ldd	r17, Y+5	; 0x05
      244:	c1 2c       	mov	r12, r1
@@ -390,9 +326,6 @@ void sendCar(CarQueue *self){
      258:	70 e0       	ldi	r23, 0x00	; 0
      25a:	cb 01       	movw	r24, r22
      25c:	0e 94 55 0e 	call	0x1caa	; 0x1caa <async>
-	}
-	
-	ASYNC(self, updateGUI, NULL);
      260:	c1 2c       	mov	r12, r1
      262:	d1 2c       	mov	r13, r1
      264:	81 eb       	ldi	r24, 0xB1	; 177
@@ -407,7 +340,6 @@ void sendCar(CarQueue *self){
      276:	70 e0       	ldi	r23, 0x00	; 0
      278:	cb 01       	movw	r24, r22
      27a:	0e 94 55 0e 	call	0x1caa	; 0x1caa <async>
-}
      27e:	df 91       	pop	r29
      280:	cf 91       	pop	r28
      282:	1f 91       	pop	r17
@@ -1069,16 +1001,16 @@ void initLCD(){
 
 	LCDCRA = (1 << LCDEN) | (1 << LCDAB);
      682:	80 ec       	ldi	r24, 0xC0	; 192
-     684:	80 93 e4 00 	sts	0x00E4, r24	; 0x8000e4 <__DATA_REGION_ORIGIN__+0x84>
+     684:	80 93 e4 00 	sts	0x00E4, r24	; 0x8000e4 <__TEXT_REGION_LENGTH__+0x7e00e4>
 	LCDCRB = (1 << LCDMUX0) | (1 << LCDMUX1) | (1 << LCDPM2) | (1 << LCDPM1) | (1 << LCDPM0);
      688:	87 e3       	ldi	r24, 0x37	; 55
-     68a:	80 93 e5 00 	sts	0x00E5, r24	; 0x8000e5 <__DATA_REGION_ORIGIN__+0x85>
+     68a:	80 93 e5 00 	sts	0x00E5, r24	; 0x8000e5 <__TEXT_REGION_LENGTH__+0x7e00e5>
 	LCDFRR = (1 << LCDCD2) | (1 << LCDCD1) | (1 << LCDCD0);
      68e:	87 e0       	ldi	r24, 0x07	; 7
-     690:	80 93 e6 00 	sts	0x00E6, r24	; 0x8000e6 <__DATA_REGION_ORIGIN__+0x86>
+     690:	80 93 e6 00 	sts	0x00E6, r24	; 0x8000e6 <__TEXT_REGION_LENGTH__+0x7e00e6>
 	LCDCCR = (1 << LCDCC3) | (1 << LCDCC2) | (1 << LCDCC1) | (1 << LCDCC0);
      694:	8f e0       	ldi	r24, 0x0F	; 15
-     696:	80 93 e7 00 	sts	0x00E7, r24	; 0x8000e7 <__DATA_REGION_ORIGIN__+0x87>
+     696:	80 93 e7 00 	sts	0x00E7, r24	; 0x8000e7 <__TEXT_REGION_LENGTH__+0x7e00e7>
 
 
 */
@@ -1164,7 +1096,7 @@ void readInput(InputHandler *self){
      700:	5c 01       	movw	r10, r24
 	
 	char ReceivedByte = UDR0; // Fetch the received byte value into the variable "ByteReceived"
-     702:	c0 91 c6 00 	lds	r28, 0x00C6	; 0x8000c6 <__DATA_REGION_ORIGIN__+0x66>
+     702:	c0 91 c6 00 	lds	r28, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
 	#define SOUTHBOUND_CAR_ARRIVE	ReceivedByte & (1 << 2)		// 4
 	#define SOUTHBOUND_BRIDGE_ENTRY	ReceivedByte & (1 << 3)		// 8
 
@@ -1287,20 +1219,20 @@ void readInput(InputHandler *self){
 void USART_Init( unsigned int ubrr){
 	/* Set baud rate */
 	UBRR0H = (unsigned char)(ubrr>>8);
-     7b8:	10 92 c5 00 	sts	0x00C5, r1	; 0x8000c5 <__DATA_REGION_ORIGIN__+0x65>
+     7b8:	10 92 c5 00 	sts	0x00C5, r1	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7e00c5>
 	UBRR0L = (unsigned char)ubrr;
      7bc:	83 e3       	ldi	r24, 0x33	; 51
-     7be:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__DATA_REGION_ORIGIN__+0x64>
+     7be:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7e00c4>
 	
 	/* Enable receiver and transmitter */
 	UCSR0B = (1<<RXEN0)|(1<<TXEN0)|(1<<RXCIE0);
      7c2:	88 e9       	ldi	r24, 0x98	; 152
-     7c4:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__DATA_REGION_ORIGIN__+0x61>
+     7c4:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7e00c1>
 	
 	/* Set frame format: 8data, 1stop bit */
 	UCSR0C = (0<<USBS0)|(1<<UCSZ00)|(1<<UCSZ01);
      7c8:	86 e0       	ldi	r24, 0x06	; 6
-     7ca:	80 93 c2 00 	sts	0x00C2, r24	; 0x8000c2 <__DATA_REGION_ORIGIN__+0x62>
+     7ca:	80 93 c2 00 	sts	0x00C2, r24	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7e00c2>
 
 
 int main( void ){
@@ -1338,10 +1270,10 @@ Bit 3: Southbound red light status
 void write(SimWriter *self){
      7f2:	fc 01       	movw	r30, r24
 	while ((UCSR0A & (1 << UDRE0)) == 0) {}; // Do nothing until UDR is ready for more data to be written to it
-     7f4:	90 91 c0 00 	lds	r25, 0x00C0	; 0x8000c0 <__DATA_REGION_ORIGIN__+0x60>
+     7f4:	90 91 c0 00 	lds	r25, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7e00c0>
      7f8:	95 ff       	sbrs	r25, 5
      7fa:	fc cf       	rjmp	.-8      	; 0x7f4 <write+0x2>
-	UDR0 = (self->nG << 0) | (self->nR << 1) |( self->sG << 2) | (self->sR << 3); // Echo back the received byte back to the computer
+	UDR0 =  (self->nG << 0) | (self->nR << 1) |( self->sG << 2) | (self->sR << 3); 
      7fc:	26 81       	ldd	r18, Z+6	; 0x06
      7fe:	37 81       	ldd	r19, Z+7	; 0x07
      800:	c9 01       	movw	r24, r18
@@ -1365,12 +1297,11 @@ void write(SimWriter *self){
      824:	88 0f       	add	r24, r24
      826:	99 1f       	adc	r25, r25
      828:	82 2b       	or	r24, r18
-     82a:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__DATA_REGION_ORIGIN__+0x66>
+     82a:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
      82e:	08 95       	ret
 
 00000830 <northboundGreenLight>:
 }
-
 
 
 void northboundGreenLight(SimWriter *self){
@@ -1633,12 +1564,12 @@ void southboundRedLight(SimWriter *self){
      9f6:	80 e8       	ldi	r24, 0x80	; 128
      9f8:	80 83       	st	Z, r24
      9fa:	10 82       	st	Z, r1
-     9fc:	10 92 85 00 	sts	0x0085, r1	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
-     a00:	10 92 84 00 	sts	0x0084, r1	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
+     9fc:	10 92 85 00 	sts	0x0085, r1	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
+     a00:	10 92 84 00 	sts	0x0084, r1	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
      a04:	84 e0       	ldi	r24, 0x04	; 4
-     a06:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__DATA_REGION_ORIGIN__+0x21>
+     a06:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
      a0a:	81 e0       	ldi	r24, 0x01	; 1
-     a0c:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__DATA_REGION_ORIGIN__+0xf>
+     a0c:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
      a10:	0f 90       	pop	r0
      a12:	0f 90       	pop	r0
      a14:	0f 90       	pop	r0
@@ -1732,9 +1663,9 @@ void southboundRedLight(SimWriter *self){
 
 00000ade <dequeue.part.0>:
      ade:	8f ef       	ldi	r24, 0xFF	; 255
-     ae0:	80 93 ec 00 	sts	0x00EC, r24	; 0x8000ec <__DATA_REGION_ORIGIN__+0x8c>
-     ae4:	80 93 ed 00 	sts	0x00ED, r24	; 0x8000ed <__DATA_REGION_ORIGIN__+0x8d>
-     ae8:	80 93 ee 00 	sts	0x00EE, r24	; 0x8000ee <__DATA_REGION_ORIGIN__+0x8e>
+     ae0:	80 93 ec 00 	sts	0x00EC, r24	; 0x8000ec <__TEXT_REGION_LENGTH__+0x7e00ec>
+     ae4:	80 93 ed 00 	sts	0x00ED, r24	; 0x8000ed <__TEXT_REGION_LENGTH__+0x7e00ed>
+     ae8:	80 93 ee 00 	sts	0x00EE, r24	; 0x8000ee <__TEXT_REGION_LENGTH__+0x7e00ee>
      aec:	81 e0       	ldi	r24, 0x01	; 1
      aee:	83 bf       	out	0x33, r24	; 51
      af0:	88 95       	sleep
@@ -1760,8 +1691,8 @@ void southboundRedLight(SimWriter *self){
      b14:	ff 93       	push	r31
      b16:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
      b1a:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-     b1e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-     b22:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+     b1e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+     b22:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
      b26:	c9 01       	movw	r24, r18
      b28:	03 2e       	mov	r0, r19
      b2a:	00 0c       	add	r0, r0
@@ -1782,8 +1713,8 @@ void southboundRedLight(SimWriter *self){
      b4e:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
      b52:	b0 9b       	sbis	0x16, 0	; 22
      b54:	1b c0       	rjmp	.+54     	; 0xb8c <__vector_1+0x98>
-     b56:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-     b5a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+     b56:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+     b5a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
      b5e:	c9 01       	movw	r24, r18
      b60:	01 96       	adiw	r24, 0x01	; 1
      b62:	09 2e       	mov	r0, r25
@@ -1851,8 +1782,8 @@ void southboundRedLight(SimWriter *self){
      bec:	ff 93       	push	r31
      bee:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
      bf2:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-     bf6:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-     bfa:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+     bf6:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+     bfa:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
      bfe:	c9 01       	movw	r24, r18
      c00:	03 2e       	mov	r0, r19
      c02:	00 0c       	add	r0, r0
@@ -1873,8 +1804,8 @@ void southboundRedLight(SimWriter *self){
      c26:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
      c2a:	b0 9b       	sbis	0x16, 0	; 22
      c2c:	1b c0       	rjmp	.+54     	; 0xc64 <__vector_2+0x98>
-     c2e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-     c32:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+     c2e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+     c32:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
      c36:	c9 01       	movw	r24, r18
      c38:	01 96       	adiw	r24, 0x01	; 1
      c3a:	09 2e       	mov	r0, r25
@@ -1942,8 +1873,8 @@ void southboundRedLight(SimWriter *self){
      cc4:	ff 93       	push	r31
      cc6:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
      cca:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-     cce:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-     cd2:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+     cce:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+     cd2:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
      cd6:	c9 01       	movw	r24, r18
      cd8:	03 2e       	mov	r0, r19
      cda:	00 0c       	add	r0, r0
@@ -1964,8 +1895,8 @@ void southboundRedLight(SimWriter *self){
      cfe:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
      d02:	b0 9b       	sbis	0x16, 0	; 22
      d04:	1b c0       	rjmp	.+54     	; 0xd3c <__vector_3+0x98>
-     d06:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-     d0a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+     d06:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+     d0a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
      d0e:	c9 01       	movw	r24, r18
      d10:	01 96       	adiw	r24, 0x01	; 1
      d12:	09 2e       	mov	r0, r25
@@ -2033,8 +1964,8 @@ void southboundRedLight(SimWriter *self){
      d9c:	ff 93       	push	r31
      d9e:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
      da2:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-     da6:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-     daa:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+     da6:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+     daa:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
      dae:	c9 01       	movw	r24, r18
      db0:	03 2e       	mov	r0, r19
      db2:	00 0c       	add	r0, r0
@@ -2055,8 +1986,8 @@ void southboundRedLight(SimWriter *self){
      dd6:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
      dda:	b0 9b       	sbis	0x16, 0	; 22
      ddc:	1b c0       	rjmp	.+54     	; 0xe14 <__vector_4+0x98>
-     dde:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-     de2:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+     dde:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+     de2:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
      de6:	c9 01       	movw	r24, r18
      de8:	01 96       	adiw	r24, 0x01	; 1
      dea:	09 2e       	mov	r0, r25
@@ -2124,8 +2055,8 @@ void southboundRedLight(SimWriter *self){
      e74:	ff 93       	push	r31
      e76:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
      e7a:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-     e7e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-     e82:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+     e7e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+     e82:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
      e86:	c9 01       	movw	r24, r18
      e88:	03 2e       	mov	r0, r19
      e8a:	00 0c       	add	r0, r0
@@ -2146,8 +2077,8 @@ void southboundRedLight(SimWriter *self){
      eae:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
      eb2:	b0 9b       	sbis	0x16, 0	; 22
      eb4:	1b c0       	rjmp	.+54     	; 0xeec <__vector_5+0x98>
-     eb6:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-     eba:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+     eb6:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+     eba:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
      ebe:	c9 01       	movw	r24, r18
      ec0:	01 96       	adiw	r24, 0x01	; 1
      ec2:	09 2e       	mov	r0, r25
@@ -2215,8 +2146,8 @@ void southboundRedLight(SimWriter *self){
      f4c:	ff 93       	push	r31
      f4e:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
      f52:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-     f56:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-     f5a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+     f56:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+     f5a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
      f5e:	c9 01       	movw	r24, r18
      f60:	03 2e       	mov	r0, r19
      f62:	00 0c       	add	r0, r0
@@ -2237,8 +2168,8 @@ void southboundRedLight(SimWriter *self){
      f86:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
      f8a:	b0 9b       	sbis	0x16, 0	; 22
      f8c:	1b c0       	rjmp	.+54     	; 0xfc4 <__vector_10+0x98>
-     f8e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-     f92:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+     f8e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+     f92:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
      f96:	c9 01       	movw	r24, r18
      f98:	01 96       	adiw	r24, 0x01	; 1
      f9a:	09 2e       	mov	r0, r25
@@ -2306,8 +2237,8 @@ void southboundRedLight(SimWriter *self){
     1024:	ff 93       	push	r31
     1026:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
     102a:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-    102e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    1032:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    102e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    1032:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     1036:	c9 01       	movw	r24, r18
     1038:	03 2e       	mov	r0, r19
     103a:	00 0c       	add	r0, r0
@@ -2328,8 +2259,8 @@ void southboundRedLight(SimWriter *self){
     105e:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
     1062:	b0 9b       	sbis	0x16, 0	; 22
     1064:	1b c0       	rjmp	.+54     	; 0x109c <__vector_11+0x98>
-    1066:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    106a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1066:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    106a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     106e:	c9 01       	movw	r24, r18
     1070:	01 96       	adiw	r24, 0x01	; 1
     1072:	09 2e       	mov	r0, r25
@@ -2397,8 +2328,8 @@ void southboundRedLight(SimWriter *self){
     10fc:	ff 93       	push	r31
     10fe:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
     1102:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-    1106:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    110a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1106:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    110a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     110e:	c9 01       	movw	r24, r18
     1110:	03 2e       	mov	r0, r19
     1112:	00 0c       	add	r0, r0
@@ -2419,8 +2350,8 @@ void southboundRedLight(SimWriter *self){
     1136:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
     113a:	b0 9b       	sbis	0x16, 0	; 22
     113c:	1b c0       	rjmp	.+54     	; 0x1174 <__vector_12+0x98>
-    113e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    1142:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    113e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    1142:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     1146:	c9 01       	movw	r24, r18
     1148:	01 96       	adiw	r24, 0x01	; 1
     114a:	09 2e       	mov	r0, r25
@@ -2488,8 +2419,8 @@ void southboundRedLight(SimWriter *self){
     11d4:	ff 93       	push	r31
     11d6:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
     11da:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-    11de:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    11e2:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    11de:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    11e2:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     11e6:	c9 01       	movw	r24, r18
     11e8:	03 2e       	mov	r0, r19
     11ea:	00 0c       	add	r0, r0
@@ -2510,8 +2441,8 @@ void southboundRedLight(SimWriter *self){
     120e:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
     1212:	b0 9b       	sbis	0x16, 0	; 22
     1214:	1b c0       	rjmp	.+54     	; 0x124c <__vector_13+0x98>
-    1216:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    121a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1216:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    121a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     121e:	c9 01       	movw	r24, r18
     1220:	01 96       	adiw	r24, 0x01	; 1
     1222:	09 2e       	mov	r0, r25
@@ -2579,8 +2510,8 @@ void southboundRedLight(SimWriter *self){
     12ac:	ff 93       	push	r31
     12ae:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
     12b2:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-    12b6:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    12ba:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    12b6:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    12ba:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     12be:	c9 01       	movw	r24, r18
     12c0:	03 2e       	mov	r0, r19
     12c2:	00 0c       	add	r0, r0
@@ -2601,8 +2532,8 @@ void southboundRedLight(SimWriter *self){
     12e6:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
     12ea:	b0 9b       	sbis	0x16, 0	; 22
     12ec:	1b c0       	rjmp	.+54     	; 0x1324 <__vector_14+0x98>
-    12ee:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    12f2:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    12ee:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    12f2:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     12f6:	c9 01       	movw	r24, r18
     12f8:	01 96       	adiw	r24, 0x01	; 1
     12fa:	09 2e       	mov	r0, r25
@@ -2670,8 +2601,8 @@ void southboundRedLight(SimWriter *self){
     1384:	ff 93       	push	r31
     1386:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
     138a:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-    138e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    1392:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    138e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    1392:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     1396:	c9 01       	movw	r24, r18
     1398:	03 2e       	mov	r0, r19
     139a:	00 0c       	add	r0, r0
@@ -2692,8 +2623,8 @@ void southboundRedLight(SimWriter *self){
     13be:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
     13c2:	b0 9b       	sbis	0x16, 0	; 22
     13c4:	1b c0       	rjmp	.+54     	; 0x13fc <__vector_15+0x98>
-    13c6:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    13ca:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    13c6:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    13ca:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     13ce:	c9 01       	movw	r24, r18
     13d0:	01 96       	adiw	r24, 0x01	; 1
     13d2:	09 2e       	mov	r0, r25
@@ -2761,8 +2692,8 @@ void southboundRedLight(SimWriter *self){
     145c:	ff 93       	push	r31
     145e:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
     1462:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-    1466:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    146a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1466:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    146a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     146e:	c9 01       	movw	r24, r18
     1470:	03 2e       	mov	r0, r19
     1472:	00 0c       	add	r0, r0
@@ -2783,8 +2714,8 @@ void southboundRedLight(SimWriter *self){
     1496:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
     149a:	b0 9b       	sbis	0x16, 0	; 22
     149c:	1b c0       	rjmp	.+54     	; 0x14d4 <__vector_16+0x98>
-    149e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    14a2:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    149e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    14a2:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     14a6:	c9 01       	movw	r24, r18
     14a8:	01 96       	adiw	r24, 0x01	; 1
     14aa:	09 2e       	mov	r0, r25
@@ -2852,8 +2783,8 @@ void southboundRedLight(SimWriter *self){
     1534:	ff 93       	push	r31
     1536:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
     153a:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-    153e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    1542:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    153e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    1542:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     1546:	c9 01       	movw	r24, r18
     1548:	03 2e       	mov	r0, r19
     154a:	00 0c       	add	r0, r0
@@ -2874,8 +2805,8 @@ void southboundRedLight(SimWriter *self){
     156e:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
     1572:	b0 9b       	sbis	0x16, 0	; 22
     1574:	1b c0       	rjmp	.+54     	; 0x15ac <__vector_17+0x98>
-    1576:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    157a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1576:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    157a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     157e:	c9 01       	movw	r24, r18
     1580:	01 96       	adiw	r24, 0x01	; 1
     1582:	09 2e       	mov	r0, r25
@@ -2943,8 +2874,8 @@ void southboundRedLight(SimWriter *self){
     160c:	ff 93       	push	r31
     160e:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
     1612:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-    1616:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    161a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1616:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    161a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     161e:	c9 01       	movw	r24, r18
     1620:	03 2e       	mov	r0, r19
     1622:	00 0c       	add	r0, r0
@@ -2965,8 +2896,8 @@ void southboundRedLight(SimWriter *self){
     1646:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
     164a:	b0 9b       	sbis	0x16, 0	; 22
     164c:	1b c0       	rjmp	.+54     	; 0x1684 <__vector_18+0x98>
-    164e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    1652:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    164e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    1652:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     1656:	c9 01       	movw	r24, r18
     1658:	01 96       	adiw	r24, 0x01	; 1
     165a:	09 2e       	mov	r0, r25
@@ -3034,8 +2965,8 @@ void southboundRedLight(SimWriter *self){
     16e4:	ff 93       	push	r31
     16e6:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
     16ea:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-    16ee:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    16f2:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    16ee:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    16f2:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     16f6:	c9 01       	movw	r24, r18
     16f8:	03 2e       	mov	r0, r19
     16fa:	00 0c       	add	r0, r0
@@ -3056,8 +2987,8 @@ void southboundRedLight(SimWriter *self){
     171e:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
     1722:	b0 9b       	sbis	0x16, 0	; 22
     1724:	1b c0       	rjmp	.+54     	; 0x175c <__vector_19+0x98>
-    1726:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    172a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1726:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    172a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     172e:	c9 01       	movw	r24, r18
     1730:	01 96       	adiw	r24, 0x01	; 1
     1732:	09 2e       	mov	r0, r25
@@ -3125,8 +3056,8 @@ void southboundRedLight(SimWriter *self){
     17bc:	ff 93       	push	r31
     17be:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
     17c2:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-    17c6:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    17ca:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    17c6:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    17ca:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     17ce:	c9 01       	movw	r24, r18
     17d0:	03 2e       	mov	r0, r19
     17d2:	00 0c       	add	r0, r0
@@ -3147,8 +3078,8 @@ void southboundRedLight(SimWriter *self){
     17f6:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
     17fa:	b0 9b       	sbis	0x16, 0	; 22
     17fc:	1b c0       	rjmp	.+54     	; 0x1834 <__vector_20+0x98>
-    17fe:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    1802:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    17fe:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    1802:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     1806:	c9 01       	movw	r24, r18
     1808:	01 96       	adiw	r24, 0x01	; 1
     180a:	09 2e       	mov	r0, r25
@@ -3216,8 +3147,8 @@ void southboundRedLight(SimWriter *self){
     1894:	ff 93       	push	r31
     1896:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
     189a:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-    189e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    18a2:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    189e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    18a2:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     18a6:	c9 01       	movw	r24, r18
     18a8:	03 2e       	mov	r0, r19
     18aa:	00 0c       	add	r0, r0
@@ -3238,8 +3169,8 @@ void southboundRedLight(SimWriter *self){
     18ce:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
     18d2:	b0 9b       	sbis	0x16, 0	; 22
     18d4:	1b c0       	rjmp	.+54     	; 0x190c <__vector_21+0x98>
-    18d6:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    18da:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    18d6:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    18da:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     18de:	c9 01       	movw	r24, r18
     18e0:	01 96       	adiw	r24, 0x01	; 1
     18e2:	09 2e       	mov	r0, r25
@@ -3307,8 +3238,8 @@ void southboundRedLight(SimWriter *self){
     196c:	ff 93       	push	r31
     196e:	20 91 4c 01 	lds	r18, 0x014C	; 0x80014c <overflows>
     1972:	30 91 4d 01 	lds	r19, 0x014D	; 0x80014d <overflows+0x1>
-    1976:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    197a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1976:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    197a:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     197e:	c9 01       	movw	r24, r18
     1980:	03 2e       	mov	r0, r19
     1982:	00 0c       	add	r0, r0
@@ -3329,8 +3260,8 @@ void southboundRedLight(SimWriter *self){
     19a6:	b0 93 51 01 	sts	0x0151, r27	; 0x800151 <timestamp+0x3>
     19aa:	b0 9b       	sbis	0x16, 0	; 22
     19ac:	1b c0       	rjmp	.+54     	; 0x19e4 <__vector_22+0x98>
-    19ae:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    19b2:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    19ae:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    19b2:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     19b6:	c9 01       	movw	r24, r18
     19b8:	01 96       	adiw	r24, 0x01	; 1
     19ba:	09 2e       	mov	r0, r25
@@ -3410,9 +3341,9 @@ void southboundRedLight(SimWriter *self){
     1a68:	86 17       	cp	r24, r22
     1a6a:	97 07       	cpc	r25, r23
     1a6c:	a1 f0       	breq	.+40     	; 0x1a96 <__vector_9+0x72>
-    1a6e:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <__DATA_REGION_ORIGIN__+0xf>
+    1a6e:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
     1a72:	8d 7f       	andi	r24, 0xFD	; 253
-    1a74:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__DATA_REGION_ORIGIN__+0xf>
+    1a74:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
     1a78:	ff 91       	pop	r31
     1a7a:	ef 91       	pop	r30
     1a7c:	9f 91       	pop	r25
@@ -3429,21 +3360,21 @@ void southboundRedLight(SimWriter *self){
     1a92:	1f 90       	pop	r1
     1a94:	18 95       	reti
     1a96:	ca 01       	movw	r24, r20
-    1a98:	20 91 84 00 	lds	r18, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    1a9c:	30 91 85 00 	lds	r19, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1a98:	20 91 84 00 	lds	r18, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    1a9c:	30 91 85 00 	lds	r19, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     1aa0:	42 1b       	sub	r20, r18
     1aa2:	53 0b       	sbc	r21, r19
     1aa4:	41 30       	cpi	r20, 0x01	; 1
     1aa6:	51 05       	cpc	r21, r1
     1aa8:	51 f0       	breq	.+20     	; 0x1abe <__vector_9+0x9a>
-    1aaa:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__DATA_REGION_ORIGIN__+0x29>
-    1aae:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__DATA_REGION_ORIGIN__+0x28>
-    1ab2:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <__DATA_REGION_ORIGIN__+0xf>
+    1aaa:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7e0089>
+    1aae:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7e0088>
+    1ab2:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
     1ab6:	82 60       	ori	r24, 0x02	; 2
-    1ab8:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__DATA_REGION_ORIGIN__+0xf>
+    1ab8:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
     1abc:	dd cf       	rjmp	.-70     	; 0x1a78 <__vector_9+0x54>
-    1abe:	80 91 84 00 	lds	r24, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    1ac2:	90 91 85 00 	lds	r25, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1abe:	80 91 84 00 	lds	r24, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    1ac2:	90 91 85 00 	lds	r25, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     1ac6:	01 96       	adiw	r24, 0x01	; 1
     1ac8:	f0 cf       	rjmp	.-32     	; 0x1aaa <__vector_9+0x86>
 
@@ -3479,8 +3410,8 @@ void southboundRedLight(SimWriter *self){
     1b02:	ff 93       	push	r31
     1b04:	e0 90 4c 01 	lds	r14, 0x014C	; 0x80014c <overflows>
     1b08:	f0 90 4d 01 	lds	r15, 0x014D	; 0x80014d <overflows+0x1>
-    1b0c:	80 91 84 00 	lds	r24, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    1b10:	90 91 85 00 	lds	r25, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1b0c:	80 91 84 00 	lds	r24, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    1b10:	90 91 85 00 	lds	r25, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     1b14:	b0 99       	sbic	0x16, 0	; 22
     1b16:	98 c0       	rjmp	.+304    	; 0x1c48 <__vector_7+0x17e>
     1b18:	47 01       	movw	r8, r14
@@ -3587,9 +3518,9 @@ void southboundRedLight(SimWriter *self){
     1bfa:	e6 16       	cp	r14, r22
     1bfc:	f7 06       	cpc	r15, r23
     1bfe:	d9 f1       	breq	.+118    	; 0x1c76 <__vector_7+0x1ac>
-    1c00:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <__DATA_REGION_ORIGIN__+0xf>
+    1c00:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
     1c04:	8d 7f       	andi	r24, 0xFD	; 253
-    1c06:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__DATA_REGION_ORIGIN__+0xf>
+    1c06:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
     1c0a:	0e 94 2f 05 	call	0xa5e	; 0xa5e <schedule>
     1c0e:	ff 91       	pop	r31
     1c10:	ef 91       	pop	r30
@@ -3620,8 +3551,8 @@ void southboundRedLight(SimWriter *self){
     1c42:	0f 90       	pop	r0
     1c44:	1f 90       	pop	r1
     1c46:	18 95       	reti
-    1c48:	20 91 84 00 	lds	r18, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    1c4c:	30 91 85 00 	lds	r19, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1c48:	20 91 84 00 	lds	r18, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    1c4c:	30 91 85 00 	lds	r19, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     1c50:	47 01       	movw	r8, r14
     1c52:	8f ef       	ldi	r24, 0xFF	; 255
     1c54:	88 1a       	sub	r8, r24
@@ -3642,21 +3573,21 @@ void southboundRedLight(SimWriter *self){
     1c72:	bb 2a       	or	r11, r27
     1c74:	5f cf       	rjmp	.-322    	; 0x1b34 <__vector_7+0x6a>
     1c76:	ca 01       	movw	r24, r20
-    1c78:	20 91 84 00 	lds	r18, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    1c7c:	30 91 85 00 	lds	r19, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1c78:	20 91 84 00 	lds	r18, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    1c7c:	30 91 85 00 	lds	r19, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     1c80:	42 1b       	sub	r20, r18
     1c82:	53 0b       	sbc	r21, r19
     1c84:	41 30       	cpi	r20, 0x01	; 1
     1c86:	51 05       	cpc	r21, r1
     1c88:	51 f0       	breq	.+20     	; 0x1c9e <__vector_7+0x1d4>
-    1c8a:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__DATA_REGION_ORIGIN__+0x29>
-    1c8e:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__DATA_REGION_ORIGIN__+0x28>
-    1c92:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <__DATA_REGION_ORIGIN__+0xf>
+    1c8a:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7e0089>
+    1c8e:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7e0088>
+    1c92:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
     1c96:	82 60       	ori	r24, 0x02	; 2
-    1c98:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__DATA_REGION_ORIGIN__+0xf>
+    1c98:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
     1c9c:	b6 cf       	rjmp	.-148    	; 0x1c0a <__vector_7+0x140>
-    1c9e:	80 91 84 00 	lds	r24, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    1ca2:	90 91 85 00 	lds	r25, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1c9e:	80 91 84 00 	lds	r24, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    1ca2:	90 91 85 00 	lds	r25, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     1ca6:	01 96       	adiw	r24, 0x01	; 1
     1ca8:	f0 cf       	rjmp	.-32     	; 0x1c8a <__vector_7+0x1c0>
 
@@ -3737,8 +3668,8 @@ void southboundRedLight(SimWriter *self){
     1d48:	39 87       	std	Y+9, r19	; 0x09
     1d4a:	80 91 4c 01 	lds	r24, 0x014C	; 0x80014c <overflows>
     1d4e:	90 91 4d 01 	lds	r25, 0x014D	; 0x80014d <overflows+0x1>
-    1d52:	60 91 84 00 	lds	r22, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    1d56:	70 91 85 00 	lds	r23, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1d52:	60 91 84 00 	lds	r22, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    1d56:	70 91 85 00 	lds	r23, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     1d5a:	b0 99       	sbic	0x16, 0	; 22
     1d5c:	49 c0       	rjmp	.+146    	; 0x1df0 <async+0x146>
     1d5e:	2c 01       	movw	r4, r24
@@ -3808,8 +3739,8 @@ void southboundRedLight(SimWriter *self){
     1de6:	e0 90 50 01 	lds	r14, 0x0150	; 0x800150 <timestamp+0x2>
     1dea:	f0 90 51 01 	lds	r15, 0x0151	; 0x800151 <timestamp+0x3>
     1dee:	93 cf       	rjmp	.-218    	; 0x1d16 <async+0x6c>
-    1df0:	e0 91 84 00 	lds	r30, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    1df4:	f0 91 85 00 	lds	r31, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1df0:	e0 91 84 00 	lds	r30, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    1df4:	f0 91 85 00 	lds	r31, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     1df8:	2c 01       	movw	r4, r24
     1dfa:	4f ef       	ldi	r20, 0xFF	; 255
     1dfc:	44 1a       	sub	r4, r20
@@ -3837,9 +3768,9 @@ void southboundRedLight(SimWriter *self){
     1e28:	93 07       	cpc	r25, r19
     1e2a:	09 f4       	brne	.+2      	; 0x1e2e <async+0x184>
     1e2c:	7f c0       	rjmp	.+254    	; 0x1f2c <async+0x282>
-    1e2e:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <__DATA_REGION_ORIGIN__+0xf>
+    1e2e:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
     1e32:	8d 7f       	andi	r24, 0xFD	; 253
-    1e34:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__DATA_REGION_ORIGIN__+0xf>
+    1e34:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
     1e38:	33 20       	and	r3, r3
     1e3a:	09 f0       	breq	.+2      	; 0x1e3e <async+0x194>
     1e3c:	78 94       	sei
@@ -3950,18 +3881,18 @@ void southboundRedLight(SimWriter *self){
     1f28:	bf e7       	ldi	r27, 0x7F	; 127
     1f2a:	05 cf       	rjmp	.-502    	; 0x1d36 <async+0x8c>
     1f2c:	c8 01       	movw	r24, r16
-    1f2e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    1f32:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1f2e:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    1f32:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     1f36:	04 1b       	sub	r16, r20
     1f38:	15 0b       	sbc	r17, r21
     1f3a:	01 30       	cpi	r16, 0x01	; 1
     1f3c:	11 05       	cpc	r17, r1
     1f3e:	b1 f0       	breq	.+44     	; 0x1f6c <async+0x2c2>
-    1f40:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__DATA_REGION_ORIGIN__+0x29>
-    1f44:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__DATA_REGION_ORIGIN__+0x28>
-    1f48:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <__DATA_REGION_ORIGIN__+0xf>
+    1f40:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7e0089>
+    1f44:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7e0088>
+    1f48:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
     1f4c:	82 60       	ori	r24, 0x02	; 2
-    1f4e:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__DATA_REGION_ORIGIN__+0xf>
+    1f4e:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
     1f52:	72 cf       	rjmp	.-284    	; 0x1e38 <async+0x18e>
     1f54:	f9 83       	std	Y+1, r31	; 0x01
     1f56:	e8 83       	st	Y, r30
@@ -3973,8 +3904,8 @@ void southboundRedLight(SimWriter *self){
     1f66:	97 01       	movw	r18, r14
     1f68:	86 01       	movw	r16, r12
     1f6a:	5d cf       	rjmp	.-326    	; 0x1e26 <async+0x17c>
-    1f6c:	80 91 84 00 	lds	r24, 0x0084	; 0x800084 <__DATA_REGION_ORIGIN__+0x24>
-    1f70:	90 91 85 00 	lds	r25, 0x0085	; 0x800085 <__DATA_REGION_ORIGIN__+0x25>
+    1f6c:	80 91 84 00 	lds	r24, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+    1f70:	90 91 85 00 	lds	r25, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
     1f74:	01 96       	adiw	r24, 0x01	; 1
     1f76:	e4 cf       	rjmp	.-56     	; 0x1f40 <async+0x296>
     1f78:	b9 83       	std	Y+1, r27	; 0x01
@@ -4295,10 +4226,10 @@ static void idle(void) {
     21ee:	fd cf       	rjmp	.-6      	; 0x21ea <tinytimber+0x32>
 
 000021f0 <trafficLightFunc>:
-	self->focus = !self->focus;
-}
-*/
 
+
+static enum Direction{ North, South};
+	
 
 void trafficLightFunc(TrafficLight* self){
     21f0:	cf 92       	push	r12
@@ -4337,7 +4268,7 @@ void trafficLightFunc(TrafficLight* self){
     2220:	2e 83       	std	Y+6, r18	; 0x06
 	
 	
-	#define ON_TIME 3	// Time light is green
+	#define ON_TIME 8	// Time light is green
 	
 	AFTER(SEC(ON_TIME + 5), self, trafficLightFunc, NULL);
     2222:	c1 2c       	mov	r12, r1
@@ -4350,9 +4281,9 @@ void trafficLightFunc(TrafficLight* self){
     2230:	20 e0       	ldi	r18, 0x00	; 0
     2232:	30 e0       	ldi	r19, 0x00	; 0
     2234:	a9 01       	movw	r20, r18
-    2236:	60 e9       	ldi	r22, 0x90	; 144
-    2238:	70 ed       	ldi	r23, 0xD0	; 208
-    223a:	83 e0       	ldi	r24, 0x03	; 3
+    2236:	6a ee       	ldi	r22, 0xEA	; 234
+    2238:	72 e3       	ldi	r23, 0x32	; 50
+    223a:	86 e0       	ldi	r24, 0x06	; 6
     223c:	90 e0       	ldi	r25, 0x00	; 0
     223e:	0e 94 55 0e 	call	0x1caa	; 0x1caa <async>
 	}
@@ -4374,7 +4305,7 @@ void trafficLightFunc(TrafficLight* self){
 			AFTER(SEC(5),self->simWriter, northboundGreenLight, NULL);
 		break;
 		
-		case 1:
+		case South:
 			SYNC(self->simWriter, northboundRedLight, NULL);
     2254:	40 e0       	ldi	r20, 0x00	; 0
     2256:	50 e0       	ldi	r21, 0x00	; 0
@@ -4408,7 +4339,7 @@ void trafficLightFunc(TrafficLight* self){
 	
 	
 	switch(self->focus){
-		case 0:
+		case North:
 			SYNC(self->simWriter, southboundRedLight, NULL);
     228c:	40 e0       	ldi	r20, 0x00	; 0
     228e:	50 e0       	ldi	r21, 0x00	; 0

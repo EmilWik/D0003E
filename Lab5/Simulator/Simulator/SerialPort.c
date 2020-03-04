@@ -2,7 +2,9 @@
 #include <stdint.h>		// uint8_t
 #include <termios.h>
 #include <fcntl.h>
-#include <stdio.h>		
+#include <stdio.h>		// printf
+#include <stdlib.h>		// exit
+#include <unistd.h>		// read, write
 
 
 void openSerialPort(void) {
@@ -51,15 +53,18 @@ void writeToAVR(uint8_t instruction) {
 
 
 
-void getLights(void) {
+void* getLights(void* arg) {
 	uint8_t recieved;
 
 	while (1) {
 		int signal = read(com1, &recieved, sizeof(recieved));
 
-		northGreen	= signal & (1 << 0);
-		northRed	= signal & (1 << 1);
-		southGreen	= signal & (1 << 2);
-		southRed	= signal & (1 << 3);
+		if (signal > 0) {
+
+			northGreen = (recieved & (1 << 0)) >> 0;
+			northRed   = (recieved & (1 << 1)) >> 1;
+			southGreen = (recieved & (1 << 2)) >> 2;
+			southRed   = (recieved & (1 << 3)) >> 3;
+		}
 	}
 }

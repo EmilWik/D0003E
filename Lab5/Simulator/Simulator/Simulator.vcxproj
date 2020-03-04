@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="globals.c" />
     <ClCompile Include="GUI.c" />
     <ClCompile Include="Main.c" />
     <ClCompile Include="SerialPort.c" />

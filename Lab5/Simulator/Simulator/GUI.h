@@ -1,4 +1,3 @@
 #pragma once
 
-
-void* GUI(void);
+void* GUI(void* arg);

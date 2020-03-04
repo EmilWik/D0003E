@@ -1,10 +1,5 @@
-
-
-
 #include "TinyTimber.h"
 #include "GUI.h"
-
-
 
 
 typedef struct {
@@ -12,7 +7,6 @@ typedef struct {
 	GUI *gui;
 	int carsOnBridge;
 } Bridge;
-
 
 
 

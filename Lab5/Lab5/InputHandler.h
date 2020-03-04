@@ -18,9 +18,9 @@ typedef struct {
 } InputHandler;
 
 
-#define initInputHandler(gui,southQueue, northQueue, bridge) { initObject(), gui,northQueue, southQueue, bridge}
+#define initInputHandler(gui, bridge, southQueue, northQueue) { initObject(), gui,northQueue, southQueue, bridge}
 	
-void test(InputHandler *self);
+void readInput(InputHandler *self);
 
 
 

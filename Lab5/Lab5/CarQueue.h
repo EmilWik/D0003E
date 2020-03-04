@@ -4,16 +4,9 @@
 #define CARQUEUE_H_
 
 
-
-
-
 #include "TinyTimber.h"
 #include "SimWriter.h"
 #include "Bridge.h"
-
-
-
-
 
 
 typedef struct {
@@ -24,13 +17,14 @@ typedef struct {
 	int dirr;
 } CarQueue;
 
+enum Direction{ North, South};
+	
 
-#define initCarQueue(bridge, simWriter, dirr) \
-{ initObject(), bridge, simWriter, 0, dirr}
+#define initCarQueue(gui, bridge, dirr) \
+{ initObject(), bridge, gui, 0, dirr}
 
 
 void addCar(CarQueue *self);
-
 
 void sendCar(CarQueue *self);
 

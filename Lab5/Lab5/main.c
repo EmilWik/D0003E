@@ -1,3 +1,5 @@
+#include <avr/io.h>
+#include <avr/interrupt.h>
 #include "TinyTimber.h"
 #include "Bridge.h"
 #include "CarQueue.h"
@@ -5,14 +7,38 @@
 #include "InputHandler.h"
 #include "TrafficLight.h"
 #include "SimWriter.h"
-#include <avr/io.h>
-#include <avr/interrupt.h>
 
-//#define FOSC 1843200// Clock Speed
-#define FOSC 8000000UL
+
+#define FOSC 8000000UL // Clock Speed
 #define BAUD 9600
 #define MYUBRR FOSC/16/BAUD-1
+	
+void USART_Init( unsigned int ubrr);
 
+
+
+GUI			 gui		  = initGUI();
+Bridge		 bridge		  = initBridge(&gui);
+CarQueue	 northQueue	  = initCarQueue(&gui, &bridge, North);
+CarQueue	 southQueue	  = initCarQueue(&gui, &bridge, South);
+InputHandler inputHandler = initInputHandler(&gui, &bridge, &northQueue, &southQueue);
+SimWriter	 simWriter	  = initSimWriter();
+TrafficLight trafficLight = initTrafficLight(&simWriter);
+
+
+int main( void ){
+	
+	USART_Init(MYUBRR);
+	initLCD();
+
+	INSTALL(&inputHandler, readInput, IRQ_USART0_RX);
+	
+	sei();
+	
+	return TINYTIMBER(&trafficLight, trafficLightFunc, NULL);
+		
+}
+	
 
 
 void USART_Init( unsigned int ubrr){
@@ -30,60 +56,15 @@ void USART_Init( unsigned int ubrr){
 
 
 
-/*
-enum Dirr{
-	North = 0,
-	South = 1
-};
-*/
-
-GUI gui = initGUI();
-Bridge bridge = initBridge(&gui);
-CarQueue northQueue = initCarQueue(&bridge, &gui, 0);
-CarQueue southQueue = initCarQueue(&bridge, &gui, 1);
-InputHandler inputHandler = initInputHandler(&gui,&northQueue, &southQueue, &bridge);
-SimWriter simWriter = initSimWriter();
-TrafficLight trafficLight = initTrafficLight(&simWriter);
 
 
 
 
+/*	echo
 
-
-
-
-
-
-void main( void ){
-	
-
-	USART_Init(MYUBRR);
-	initLCD();
-
-	
-	INSTALL(&inputHandler, test, IRQ_USART0_RX);
-	
-	sei();
-	
-	
-	return TINYTIMBER(&trafficLight, trafficLightFunc, NULL);
-	
-	
-	
-	
-	
-	
-	
-	/*
-	sei();
-	
-	USART_Init ( MYUBRR );
 	char ReceivedByte; 
-	
-	initLCD();
-	
-	 for (;;) // Loop forever
-	 {
+	for (;;) // Loop forever
+	{
 		 while ((UCSR0A & (1 << RXC0)) == 0) {}; // Do nothing until data have been received and is ready to be read from UDR
 		 ReceivedByte = UDR0; // Fetch the received byte value into the variable "ByteReceived"
 		 
@@ -91,31 +72,5 @@ void main( void ){
 		 
 		 while ((UCSR0A & (1 << UDRE0)) == 0) {}; // Do nothing until UDR is ready for more data to be written to it
 		 UDR0 = ReceivedByte; // Echo back the received byte back to the computer
-	 }
-	*/
-	
-	/*
-	
-	initLCD();
-	
-	USART_Transmit(' ');
-	USART_Transmit('e');
-	USART_Transmit('n');
-	USART_Transmit('d');
-	USART_Transmit(' ');
-	USART_Transmit('m');
-	USART_Transmit('e');
-
-	*/
-	
-
-	
-	/*
-	while(1){
-		printAt(&gui, UCSR0C);
 	}
-	*/
-}
-	
-	
-
+*/

@@ -9,12 +9,16 @@
 
 typedef struct {
 	Object super;
+	int nG;
+	int nR;
+	int sG;
+	int sR;
 } SimWriter;
 
 
 
 #define initSimWriter() \
-	{ initObject(), 0}
+	{ initObject(), 0, 0, 0, 0}
 
 
 

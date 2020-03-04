@@ -115,7 +115,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GUI.c" />
     <ClCompile Include="Main.c" />
+    <ClCompile Include="SerialPort.c" />
+    <ClCompile Include="Simulator.c" />
+    <ClCompile Include="UserInput.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="globals.h" />
+    <ClInclude Include="GUI.h" />
+    <ClInclude Include="SerialPort.h" />
+    <ClInclude Include="Simulator.h" />
+    <ClInclude Include="UserInput.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

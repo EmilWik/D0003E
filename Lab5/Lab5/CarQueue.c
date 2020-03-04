@@ -1,11 +1,7 @@
 
-
 #include "TinyTimber.h"
 #include "GUI.h"
 #include "Bridge.h"
-
-
-
 
 
 
@@ -19,23 +15,21 @@ typedef struct {
 } CarQueue;
 
 
-
+enum Direction{ North, South};
 
 
 void updateGUI(CarQueue *self){
 	
-	
 	switch(self->dirr){
-		case 0:
+		case North:
 			ASYNC(self->gui, carsInNorthQueue, self->carsInQueue);
 		break;
 		
-		case 1:
+		case South:
 			ASYNC(self->gui, carsInSouthQueue, self->carsInQueue);
 		break;
 		
-		default:
-		break;
+		default: /* ¯\_(?)_/¯ */ break;
 	}
 }
 

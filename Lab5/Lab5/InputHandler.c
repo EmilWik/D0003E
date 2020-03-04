@@ -1,4 +1,3 @@
-
 #include <avr/io.h>
 #include "TinyTimber.h"
 #include "SimWriter.h"
@@ -23,55 +22,28 @@ Bit 3: Southbound bridge entry sensor activated
 
 */
 
-/*
-	void realFunc()...
-*/
 
 
-
-
-
-
-void test(InputHandler *self){
+void readInput(InputHandler *self){
 	
 	char ReceivedByte = UDR0; // Fetch the received byte value into the variable "ByteReceived"
 	
- 
+
+	#define NORTHBOUND_CAR_ARRIVE	ReceivedByte & (1 << 0)		// 1
+	#define NORTHBOUND_BRIDGE_ENTRY	ReceivedByte & (1 << 1)		// 2 
+	#define SOUTHBOUND_CAR_ARRIVE	ReceivedByte & (1 << 2)		// 4
+	#define SOUTHBOUND_BRIDGE_ENTRY	ReceivedByte & (1 << 3)		// 8
+
 
 	
-	#define NORTHBOUND_CAR_ARRIVE	0		// 1
-	#define NORTHBOUND_BRIDGE_ENTRY	1		// 2 
-	#define SOUTHBOUND_CAR_ARRIVE	2		// 4
-	#define SOUTHBOUND_BRIDGE_ENTRY	3		// 8
+	if (NORTHBOUND_CAR_ARRIVE)	{ ASYNC(self->northQueue,  addCar, NULL); }
+	if (NORTHBOUND_BRIDGE_ENTRY){ ASYNC(self->northQueue, sendCar, NULL); }		
+	if (SOUTHBOUND_CAR_ARRIVE)	{ ASYNC(self->southQueue,  addCar, NULL); }
+	if (SOUTHBOUND_BRIDGE_ENTRY){ ASYNC(self->southQueue, sendCar, NULL); }
+	
+}
 
-	
-	
-	
-	
-	if ( ReceivedByte & (1 << NORTHBOUND_CAR_ARRIVE) ) {
-		ASYNC(self->northQueue, addCar, NULL);
-		
-	}
-	
-	if ( ReceivedByte & (1 << NORTHBOUND_BRIDGE_ENTRY) ) {
-		ASYNC(self->northQueue, sendCar, NULL);
-	}
-	
-	if ( ReceivedByte & (1 << SOUTHBOUND_CAR_ARRIVE) ) {
-		ASYNC(self->southQueue, addCar, NULL);
-	}
-	
-	
-	if ( ReceivedByte & (1 << SOUTHBOUND_BRIDGE_ENTRY)) {
-		ASYNC(self->southQueue, sendCar, NULL);
-	}
-	
-	
-	
-	
-	
-	/*
+/*
 	while ((UCSR0A & (1 << UDRE0)) == 0) {}; // Do nothing until UDR is ready for more data to be written to it
 	UDR0 = ReceivedByte; // Echo back the received byte back to the computer
 */
-}
